@@ -10,13 +10,21 @@
         android:id="@+id/mine_iv"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="fitXY" />
 
     <SeekBar
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_below="@+id/mine_iv" />
+
+    <Button
+        android:id="@+id/jump1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seek_bar"
+        android:layout_marginTop="10dp"
+        android:onClick="junm1"
+        android:text="飞碟动画" />
 
 </RelativeLayout>
