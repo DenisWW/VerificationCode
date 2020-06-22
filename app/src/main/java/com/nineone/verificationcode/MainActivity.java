@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String id = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        String id = Settings.System.getString(getContentResolver(),  Settings.Secure.ANDROID_ID);
         Log.e("ANDROID_ID", "====="+id);
         initImageLoader(this);
         ActivityCompat.requestPermissions(this, new String[]{permission}, 200);
