@@ -42,14 +42,12 @@ public class CircleView extends androidx.appcompat.widget.AppCompatImageView {
         Path path = new Path();
         path.addRect(new RectF(0, 0, getWidth(), getHeight()), Path.Direction.CCW);
         Path kuang = new Path();
-        kuang.addCircle(getWidth() / 2, getHeight() / 2, getHeight() / 2, Path.Direction.CCW);
+        kuang.addCircle(getWidth() / 2f, getHeight() / 2f, getHeight() / 2f, Path.Direction.CCW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) path.op(kuang, Path.Op.DIFFERENCE);
         super.onDraw(canvas);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         canvas.drawPath(path, paint);
-
 //        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-
         paint.setXfermode(null);
         canvas.restoreToCount(layerID);
     }

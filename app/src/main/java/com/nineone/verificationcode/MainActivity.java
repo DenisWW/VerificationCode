@@ -1,6 +1,7 @@
 package com.nineone.verificationcode;
 
 import androidx.core.app.ActivityCompat;
+import androidx.work.WorkManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -36,9 +37,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String id = Settings.System.getString(getContentResolver(),  Settings.Secure.ANDROID_ID);
-        Log.e("ANDROID_ID", "====="+id);
+        String id = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         initImageLoader(this);
         ActivityCompat.requestPermissions(this, new String[]{permission}, 200);
         seekBar = findViewById(R.id.seek_bar);
@@ -63,30 +62,7 @@ public class MainActivity extends Activity {
 
             }
         });
-//        try {
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    super.run();
-//                    try {
-//                        InputStream fileInputStream = getResources().openRawResource(R.mipmap.fire_bitmap);
-//                        InputStream testInputStream = getResources().openRawResourceFd(R.mipmap.login_top_bg).createInputStream();
-//                        InputStream testInputStream1 = getResources().openRawResourceFd(R.mipmap.demo2).createInputStream();
-//                        readStream(fileInputStream, fileInputStream.available());
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            }.start();
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
+//        WorkManager workManager = WorkManager.getInstance(this);
     }
 
     private void readStream(InputStream fileInputStream, int available) {

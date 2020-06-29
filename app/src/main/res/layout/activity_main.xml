@@ -32,15 +32,41 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_below="@+id/jump1"
-        android:scaleType="centerCrop"
         android:onClick="clickStart"
+        android:scaleType="centerCrop"
         android:src="@mipmap/demo2" />
 
     <com.nineone.verificationcode.APngImageView
         android:id="@+id/gif_iv"
-        android:layout_below="@+id/circle"
         android:layout_width="157dp"
-        android:layout_height="26dp" />
+        android:layout_height="26dp"
+        android:layout_below="@+id/circle" />
+
+    <com.nineone.verificationcode.view.ParentViewGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/gif_iv">
+
+        <LinearLayout
+            android:id="@+id/child_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/right_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/child_view"
+            android:background="@color/colorAccent" />
+    </com.nineone.verificationcode.view.ParentViewGroup>
 
 
 </RelativeLayout>
