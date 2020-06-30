@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 
 import com.nineone.verificationcode.activity.BesselActivity;
 import com.nineone.verificationcode.view.DragImageView;
+import com.nineone.verificationcode.view.ParentViewGroup;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
     private DragImageView mine_iv;
     private APngImageView gif_iv;
     private String permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private ParentViewGroup parentViewGroup;
 
     @SuppressLint("ResourceType")
     @Override
@@ -62,6 +64,14 @@ public class MainActivity extends Activity {
 
             }
         });
+
+        findViewById(R.id.testView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("setOnClickListener", "==============");
+            }
+        });
+        parentViewGroup = findViewById(R.id.parent);
 //        WorkManager workManager = WorkManager.getInstance(this);
     }
 
@@ -164,7 +174,12 @@ public class MainActivity extends Activity {
     }
 
     public void clickStart(View view) {
+        if (parentViewGroup.isOpenRightView()) {
+            parentViewGroup.closeRightLayout();
+        } else {
+            parentViewGroup.openRightLayout();
+        }
 
-        gif_iv.start();
+//        gif_iv.start();
     }
 }

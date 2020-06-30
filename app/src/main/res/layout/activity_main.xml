@@ -45,7 +45,9 @@
     <com.nineone.verificationcode.view.ParentViewGroup
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/gif_iv">
+        android:layout_below="@+id/gif_iv"
+        android:id="@+id/parent"
+        app:targetViewId="@+id/right_rl">
 
         <LinearLayout
             android:id="@+id/child_view"
@@ -65,7 +67,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/child_view"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/testView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我是谁！！！！！！！！！！！！！！！" />
+
+        </RelativeLayout>
     </com.nineone.verificationcode.view.ParentViewGroup>
 
 
