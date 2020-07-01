@@ -3,6 +3,9 @@ package com.nineone.verificationcode.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,6 +14,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.OverScroller;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.customview.widget.ViewDragHelper;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -63,11 +68,21 @@ public class ParentViewGroup extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        if (changed) {
-            maxLeft = r;
+//        if (changed) {
+        maxLeft = r;
 //            capturedChild.layout(r, 0, r * 2, b);
-            capturedChild.setTranslationX(r);
+//            capturedChild.setTranslationX(r);
+//        }
+
+        if (view == null) {
+            view = new View(getContext());
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
+            Log.e("getChildCount()", "===" + getChildCount());
+            addView(view, 1);
+            view.setAlpha(0f);
+            view.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
+
         Log.e("onLayout", "====" + changed
                 + "    getMeasuredWidth==" + capturedChild.getMeasuredWidth()
                 + "    getLeft==" + capturedChild.getLeft()
@@ -75,19 +90,25 @@ public class ParentViewGroup extends FrameLayout {
         );
     }
 
+    private View view;
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         capturedChild = findViewById(R.id.right_rl);
-        recycler = findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new SimpleAdapter());
+        leftChild = findViewById(R.id.child_view);
         maxLeft = w;
-        Log.e("onSizeChanged", "===" + h + "    ===" + w);
-        for (int i = 0; i < getChildCount(); i++) {
-            Log.e("getChildCount", "===" + getChildAt(i));
-        }
+        capturedChild.setTranslationX(maxLeft);
+//        if (view != null) {
+//            ViewGroup viewParent = (ViewGroup) view.getParent();
+//            if (viewParent != null) {
+//                viewParent.removeView(view);
+//            }
+//            addView(view, 1);
+//        }
+//        Log.e("onSizeChanged", "-=====" + view.getWidth() + "     ==" + view.getHeight());
     }
+
 
     private void init(Context context) {
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
@@ -95,9 +116,11 @@ public class ParentViewGroup extends FrameLayout {
         mMinimumVelocity = ViewConfiguration.get(getContext()).getScaledMinimumFlingVelocity();
 //        scroller = new OverScroller(getContext());
         scroller = new Scroller(context);
+
     }
 
     View capturedChild;
+    View leftChild;
     private float mLastMotionX;
     private float LastMotionX;
     private float mLastMotionY;
@@ -134,8 +157,6 @@ public class ParentViewGroup extends FrameLayout {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        helper.processTouchEvent(event);
-
         if (mVelocityTracker == null) mVelocityTracker = VelocityTracker.obtain();
         mVelocityTracker.addMovement(event);
         float xDiff = 0f;
@@ -166,6 +187,7 @@ public class ParentViewGroup extends FrameLayout {
                     capturedChild.setTranslationX(0);
                     isOpen = true;
                 }
+                onChangeTranslationX();
                 LastMotionX = event.getX();
                 break;
             case MotionEvent.ACTION_DOWN:
@@ -181,53 +203,34 @@ public class ParentViewGroup extends FrameLayout {
         return true;
     }
 
+    private void onChangeTranslationX() {
+//        Rect rect = new Rect(0, 0, leftChild.getRight(), leftChild.getBottom());
+//        new Canvas().drawRect(rect, new Paint(ContextCompat.getColor(getContext(),R.color.colorPrimary)));
+        if (view != null) {
+            float f = ((maxLeft - capturedChild.getTranslationX()) / maxLeft) * 1.f;
+            view.setAlpha(f);
+            Log.e("view", "===" + view.getWidth() + "   ==" + view.getHeight());
+        }
+
+    }
+
+    private int i = 0;
+
     @Override
     public void computeScroll() {
         if (scroller.computeScrollOffset()) {
+            postInvalidate();
             capturedChild.setTranslationX(scroller.getCurrX());
-            invalidate();
+            onChangeTranslationX();
         } else {
 
         }
+//        Log.e("computeScroll", "===" + i++ + "       " + scroller.computeScrollOffset() + "   scroller.getCurrX()=" + scroller.getCurrX()
+//                + "   getFinalX===" + scroller.getFinalX()
+//                + "   getStartX===" + scroller.getStartX()
+//        );
         super.computeScroll();
 
-    }
-
-    private class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private List<String> list;
-
-        public SimpleAdapter() {
-            list = new ArrayList<>();
-            for (int i = 0; i < 50; i++) {
-                list.add("1213131");
-            }
-        }
-
-        @NonNull
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new MyViewHolder(new TextView(getContext()));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            MyViewHolder viewHolder = (MyViewHolder) holder;
-            viewHolder.textView.setText(list.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = (TextView) itemView;
-        }
     }
 
     public void openRightLayout() {

@@ -1,6 +1,9 @@
 package com.nineone.verificationcode;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkManager;
 
 import android.Manifest;
@@ -12,7 +15,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.nineone.verificationcode.activity.BesselActivity;
 import com.nineone.verificationcode.view.DragImageView;
@@ -26,6 +31,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
     private SeekBar seekBar;
@@ -72,7 +79,27 @@ public class MainActivity extends Activity {
             }
         });
         parentViewGroup = findViewById(R.id.parent);
+
+        setAdapter();
+
 //        WorkManager workManager = WorkManager.getInstance(this);
+    }
+
+    private RecyclerView recycler;
+    private RecyclerView recycler1;
+    private SimpleAdapter adapter;
+
+
+    private void setAdapter() {
+        recycler = findViewById(R.id.recycler);
+        recycler1 = findViewById(R.id.recycler1);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler1.setLayoutManager(new LinearLayoutManager(this));
+
+        recycler.setAdapter(adapter = new SimpleAdapter());
+        recycler1.setAdapter(adapter);
+        adapter.setList();
+
     }
 
     private void readStream(InputStream fileInputStream, int available) {
@@ -174,12 +201,57 @@ public class MainActivity extends Activity {
     }
 
     public void clickStart(View view) {
-        if (parentViewGroup.isOpenRightView()) {
-            parentViewGroup.closeRightLayout();
-        } else {
-            parentViewGroup.openRightLayout();
-        }
+//        if (parentViewGroup.isOpenRightView()) {
+//            parentViewGroup.closeRightLayout();
+//        } else {
+//            parentViewGroup.openRightLayout();
+//        }
+//        parentViewGroup.setList();
 
 //        gif_iv.start();
     }
+
+
+    private class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private List<String> list;
+
+        public SimpleAdapter() {
+
+        }
+
+        public void setList() {
+            list = new ArrayList<>();
+            for (int i = 0; i < 50; i++) {
+                list.add("i=====" + i);
+            }
+
+        }
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new MyViewHolder(new TextView(getApplicationContext()));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            MyViewHolder viewHolder = (MyViewHolder) holder;
+            viewHolder.textView.setText(list.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView textView;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView = (TextView) itemView;
+        }
+    }
+
 }

@@ -46,14 +46,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/gif_iv"
-        android:id="@+id/parent"
-        app:targetViewId="@+id/right_rl">
+        android:id="@+id/parent">
 
         <LinearLayout
             android:id="@+id/child_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -69,6 +68,10 @@
             android:layout_toRightOf="@+id/child_view"
             android:background="@color/colorAccent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
             <TextView
                 android:id="@+id/testView"
                 android:layout_width="match_parent"
