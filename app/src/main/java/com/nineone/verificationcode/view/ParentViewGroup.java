@@ -78,9 +78,10 @@ public class ParentViewGroup extends FrameLayout {
             view = new View(getContext());
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
             Log.e("getChildCount()", "===" + getChildCount());
-            addView(view, 1);
             view.setAlpha(0f);
-            view.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            addView(view, 1); view.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
         }
 
         Log.e("onLayout", "====" + changed
