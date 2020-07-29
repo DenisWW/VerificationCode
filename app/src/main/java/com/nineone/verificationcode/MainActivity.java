@@ -2,6 +2,7 @@ package com.nineone.verificationcode;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.ViewParentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkManager;
@@ -13,13 +14,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.annotation.ActAnnotation;
 import com.nineone.verificationcode.activity.BesselActivity;
+import com.nineone.verificationcode.utils.Utils;
 import com.nineone.verificationcode.view.DragImageView;
 import com.nineone.verificationcode.view.ParentViewGroup;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -34,12 +48,14 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+@ActAnnotation(name = "TestMainActivity")
 public class MainActivity extends Activity {
     private SeekBar seekBar;
     private DragImageView mine_iv;
     private APngImageView gif_iv;
     private String permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private ParentViewGroup parentViewGroup;
+    private EditText edit_view;
 
     @SuppressLint("ResourceType")
     @Override
@@ -52,6 +68,7 @@ public class MainActivity extends Activity {
         seekBar = findViewById(R.id.seek_bar);
         mine_iv = findViewById(R.id.mine_iv);
         gif_iv = findViewById(R.id.gif_iv);
+        edit_view = findViewById(R.id.edit_view);
         seekBar.setMax(1000);
         mine_iv.getBgImageView().setImageResource(R.mipmap.demo2);
         mine_iv.getProgressImageView().setImageResource(R.mipmap.demo2);
@@ -81,7 +98,7 @@ public class MainActivity extends Activity {
         parentViewGroup = findViewById(R.id.parent);
 
         setAdapter();
-
+        Utils.addActivity();
 //        WorkManager workManager = WorkManager.getInstance(this);
     }
 
@@ -99,83 +116,14 @@ public class MainActivity extends Activity {
         recycler.setAdapter(adapter = new SimpleAdapter());
         recycler1.setAdapter(adapter);
         adapter.setList();
-
-    }
-
-    private void readStream(InputStream fileInputStream, int available) {
-        try {
-            int capacity = (available > 0) ? (available + 4 * 1024) : 16 * 1024;
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream(capacity);
-            int nRead;
-            byte[] data = new byte[16 * 1024];
-            while ((nRead = fileInputStream.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
+        WebView webView = new WebView(this);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
             }
-            buffer.flush();
-//            APngHeader aPngHeaderParser = new APngHeaderParser().setData(ByteBuffer.wrap(buffer.toByteArray())).parseHeader();
-//            ByteBuffer rawData = ByteBuffer.wrap(buffer.toByteArray()).asReadOnlyBuffer();
-//            rawData.position(0);
-//            for (int i = 0; i < 100; i++) {
-//                byte b = rawData.get();
-//                Log.e("readStream", i + "===" + b);
-//            }
-//            int n= (byte)0x81;
-//            int m= 0x81;
-//            Log.e("(byte)", "  n==" +new String(new byte[]{82}) );
-//            for (int i = 0; i < APngConstant.LENGTH_SIGNATURE; i++) {
-//                byte b = rawData.get();
-//                Log.e("readStream", b + "===" + new String(new byte[]{b}, "utf-8")
-//                        + "    ==" + APngConstant.BYTES_SIGNATURE[i]
-//                );
-//            }
-
-//            CharBuffer rawData = fileInputStream.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, fileInputStream.available()).asCharBuffer();
-
-//            rawData.position(0);
-//            rawData.order(ByteOrder.BIG_ENDIAN);
-//
-//            rawData.position(0);
-//            int length, code;
-//            for (int i = 0; i < 1000; i++) {
-//                length = rawData.getInt();
-//            Log.e("rawData", i + "    code ===" + "  position==" + rawData.position() + "    ==" + rawData.get());
-//                if (code == APngConstant.IHDR_VALUE) {
-//                    Log.e("readIHDR", i + "===" + readIHDR(rawData).toString());
-//                } else if (code == APngConstant.acTL_VALUE) {
-//                    readAcTL(rawData);
-//                }
-//                int newPosition = Math.min(rawData.position() + 4, rawData.limit());
-//                rawData.position(newPosition);
-
-//                skip(rawData, 4);
-//                rawData.position(i * 4);
-//                        + "\nIHDR_VALUE=" + APngConstant.IHDR_VALUE
-//                        + "\nacTL_VALUE=" + APngConstant.acTL_VALUE
-//                        + "\nPLTE_VALUE=" + APngConstant.PLTE_VALUE
-//                        + "\nfcTL_VALUE=" + APngConstant.fcTL_VALUE
-//                        + "\nIDAT_VALUE=" + APngConstant.IDAT_VALUE
-//                        + "\nfdAT_VALUE=" + APngConstant.fdAT_VALUE
-//                        + "\nIEND_VALUE=" + APngConstant.IEND_VALUE
-//                        + "\ntIME_VALUE=" + APngConstant.tIME_VALUE
-//                        + "\niTXt_VALUE=" + APngConstant.iTXt_VALUE
-//                        + "\ntEXt_VALUE=" + APngConstant.tEXt_VALUE
-//                        + "\nzTXt_VALUE=" + APngConstant.zTXt_VALUE
-//                        + "\ngAMA_VALUE=" + APngConstant.gAMA_VALUE
-//                        + "\nbKGD_VALUE=" + APngConstant.bKGD_VALUE
-//                        + "\ntRNS_VALUE=" + APngConstant.tRNS_VALUE
-//                );
-//            }
-
-
-        } catch (IOException ignored) {
-        }
+        });
     }
-
-    /**
-     * Animation Control Chunk<br/>
-     * num_frames：0~3字节表示该Apng总的播放帧数。<br/>
-     * num_plays：4~7字节表示该Apng循环播放的次数。<br/>
-     */
 
 
     public void junm1(View view) {
@@ -209,6 +157,29 @@ public class MainActivity extends Activity {
 //        parentViewGroup.setList();
 
 //        gif_iv.start();
+
+        SpannableString spannableString = new SpannableString("我爱你");
+        SpData spData = new SpData();
+        spannableString.setSpan(spData, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(this.getResources().getColor(R.color.colorPrimary)), 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        Log.e("edit_view", "===" + edit_view.getSelectionStart());
+//        edit_view.setText(spannableString, TextView.BufferType.SPANNABLE);
+//        edit_view.getText().setSpan(spannableString, edit_view.getSelectionStart() > 0 ? edit_view.getSelectionStart() : 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        edit_view.getText().insert(edit_view.getSelectionStart() > 0 ? edit_view.getSelectionStart() : 0, spannableString);
+//        edit_view.getText().setSpan(new ForegroundColorSpan(this.getResources().getColor(R.color.colorPrimary)), 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//        edit_view.getText().setSpan(new ClickableSpan() {
+//            @Override
+//            public void onClick(@NonNull View widget) {
+//                Toast.makeText(MainActivity.this, "点击了", Toast.LENGTH_LONG).show();
+//            }
+//        }, 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        edit_view.setMovementMethod(LinkMovementMethod.getInstance());
+        SpData[] spanneds = edit_view.getText().getSpans(0, edit_view.getText().length(), SpData.class);
+        for (SpData spData1 : spanneds) {
+            int start = edit_view.getText().getSpanStart(spData1);
+            int end = edit_view.getText().getSpanEnd(spData1);
+            Log.e("spData1", "==" + spData1 + "    start=" + start + "    end=" + end);
+        }
     }
 
 
@@ -252,6 +223,55 @@ public class MainActivity extends Activity {
             super(itemView);
             textView = (TextView) itemView;
         }
+    }
+
+    public class SpData {
+        private CharSequence showContent;
+        private Object customSpan;
+        private int start;
+        private int end;
+        private int userId;
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public Object getCustomSpan() {
+            return customSpan;
+        }
+
+        private void setCustomSpan(Object customSpan) {
+            this.customSpan = customSpan;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        private void setStart(int start) {
+            this.start = start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        private void setEnd(int end) {
+            this.end = end;
+        }
+
+        public CharSequence getShowContent() {
+            return showContent;
+        }
+
+        private void setShowContent(CharSequence showContent) {
+            this.showContent = showContent;
+        }
+
     }
 
 }

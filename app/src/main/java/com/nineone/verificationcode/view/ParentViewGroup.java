@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.NestedScrollingParent;
 import androidx.core.view.ViewCompat;
 import androidx.customview.widget.ViewDragHelper;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,7 +38,7 @@ import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParentViewGroup extends FrameLayout {
+public class ParentViewGroup extends FrameLayout implements NestedScrollingParent {
     int mTouchSlop;
     private int maxLeft;
     private RecyclerView recycler;
@@ -79,16 +80,11 @@ public class ParentViewGroup extends FrameLayout {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
             Log.e("getChildCount()", "===" + getChildCount());
             view.setAlpha(0f);
-            addView(view, 1); view.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            addView(view, 1);
+            view.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
 
         }
-
-        Log.e("onLayout", "====" + changed
-                + "    getMeasuredWidth==" + capturedChild.getMeasuredWidth()
-                + "    getLeft==" + capturedChild.getLeft()
-                + "    getTranslationX==" + capturedChild.getTranslationX()
-        );
     }
 
     private View view;
@@ -130,7 +126,6 @@ public class ParentViewGroup extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.e("onInterceptTouchEvent", "===" + ev.getAction());
         final float x = ev.getX();
         final float y = ev.getY();
         switch (ev.getAction()) {
@@ -153,6 +148,11 @@ public class ParentViewGroup extends FrameLayout {
 
 
         return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -210,7 +210,11 @@ public class ParentViewGroup extends FrameLayout {
         if (view != null) {
             float f = ((maxLeft - capturedChild.getTranslationX()) / maxLeft) * 1.f;
             view.setAlpha(f);
-            Log.e("view", "===" + view.getWidth() + "   ==" + view.getHeight());
+            if (f > 0) {
+                if (!view.isShown()) view.setVisibility(VISIBLE);
+            } else {
+                if (view.isShown()) view.setVisibility(GONE);
+            }
         }
 
     }
@@ -223,13 +227,7 @@ public class ParentViewGroup extends FrameLayout {
             postInvalidate();
             capturedChild.setTranslationX(scroller.getCurrX());
             onChangeTranslationX();
-        } else {
-
         }
-//        Log.e("computeScroll", "===" + i++ + "       " + scroller.computeScrollOffset() + "   scroller.getCurrX()=" + scroller.getCurrX()
-//                + "   getFinalX===" + scroller.getFinalX()
-//                + "   getStartX===" + scroller.getStartX()
-//        );
         super.computeScroll();
 
     }
@@ -255,5 +253,23 @@ public class ParentViewGroup extends FrameLayout {
     public boolean isOpenRightView() {
 
         return isOpen;
+    }
+
+    @Override
+    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+        Log.e("onStartNestedScroll", "   target==="+target+"     =="+nestedScrollAxes+"     "+ViewCompat.SCROLL_AXIS_VERTICAL);
+        return true;
+    }
+
+    @Override
+    public void onNestedScrollAccepted(View child, View target, int axes) {
+        super.onNestedScrollAccepted(child, target, axes);
+        Log.e("onNestedScrollAccepted", "   target==="+target+"     =="+axes);
+    }
+
+    @Override
+    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+        Log.e("onNestedScroll", "   target==="+target+"     dyConsumed=="+dyConsumed+"     dyUnconsumed=="+dyUnconsumed);
     }
 }

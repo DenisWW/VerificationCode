@@ -1,2 +1,5 @@
+include ':processor-compiler'
+include ':annotation'
+include ':groovyLib'
 rootProject.name='VerificationCode'
 include ':app'

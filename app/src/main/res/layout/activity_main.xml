@@ -31,6 +31,10 @@
         android:id="@+id/circle"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
         android:layout_below="@+id/jump1"
         android:onClick="clickStart"
         android:scaleType="centerCrop"
@@ -42,11 +46,17 @@
         android:layout_height="26dp"
         android:layout_below="@+id/circle" />
 
+    <EditText
+        android:id="@+id/edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gif_iv" />
+
     <com.nineone.verificationcode.view.ParentViewGroup
+        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/gif_iv"
-        android:id="@+id/parent">
+        android:layout_below="@+id/edit_view">
 
         <LinearLayout
             android:id="@+id/child_view"
@@ -72,6 +82,7 @@
                 android:id="@+id/recycler1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
             <TextView
                 android:id="@+id/testView"
                 android:layout_width="match_parent"

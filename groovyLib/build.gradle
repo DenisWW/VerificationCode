@@ -1,0 +1,28 @@
+//apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'groovy'
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.squareup:javapoet:1.10.0'
+    implementation localGroovy()
+    implementation gradleApi()
+}
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.example.groovylib'
+            pom.artifactId = 'MyTestClass'
+            pom.version = 1.0
+            //本地的Maven地址设置为D:/repos
+            repository(url: uri('../repo'))
+        }
+    }
+}
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
