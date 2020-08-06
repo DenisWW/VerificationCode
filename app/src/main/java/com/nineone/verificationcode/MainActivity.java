@@ -1,6 +1,7 @@
 package com.nineone.verificationcode;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.ViewParentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,14 +13,24 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaCodec;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
+import android.media.MediaExtractor;
+import android.media.MediaFormat;
+import android.media.MediaMuxer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceError;
@@ -42,11 +53,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.media.MediaCodecList.REGULAR_CODECS;
 
 @ActAnnotation(name = "TestMainActivity")
 public class MainActivity extends Activity {
@@ -56,7 +70,9 @@ public class MainActivity extends Activity {
     private String permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private ParentViewGroup parentViewGroup;
     private EditText edit_view;
+    private MediaFormat mOutputFormat;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +115,129 @@ public class MainActivity extends Activity {
 
         setAdapter();
         Utils.addActivity();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+        }
+
 //        WorkManager workManager = WorkManager.getInstance(this);
+
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                boolean outputDone = false;
+                try {
+//Environment.getExternalStorageDirectory() + "/DCIM/Camera/VID_20200730_180248.mp4"
+                    MediaFormat format = getMediaFormatFrom();
+                    Log.e("format", "====" + format.toString());
+                    MediaCodec decoder = MediaCodec.createDecoderByType(format.getString(MediaFormat.KEY_MIME));
+                    decoder.setCallback(new MediaCodec.Callback() {
+                        @Override
+                        public void onInputBufferAvailable(@NonNull MediaCodec codec, int index) {
+                            Log.e("onInputBufferAvailable", "=====" + index + "    ==");
+                        }
+
+                        @Override
+                        public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
+
+                            Log.e("onOutputBufferAvailable", "=====" + index);
+                        }
+
+                        @Override
+                        public void onError(@NonNull MediaCodec codec, @NonNull MediaCodec.CodecException e) {
+                            Log.e("onError", "=====" + e.getMessage());
+                        }
+
+                        @Override
+                        public void onOutputFormatChanged(@NonNull MediaCodec codec, @NonNull MediaFormat format) {
+//                    mOutputFormat = format; // option B
+                            Log.e("onOutputFormatChanged", "=====" + format.toString());
+                        }
+                    });
+                    MediaFormat mFormat = MediaFormat.createVideoFormat("video/avc", 640, 480);     // 创建MediaFormat
+                    mFormat.setInteger(MediaFormat.KEY_BIT_RATE, 600);// 指定比特率
+                    mFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 30);  // 指定帧率
+                    mFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible);  // 指定编码器颜色格式
+                    mFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1); // 指定关键帧时间间隔
+//                    decoder.configure(format, new Surface(){}, null, 0);
+                    decoder.start();
+                    final int TIMEOUT_USEC = 2500;
+                    while (true) {
+                        int inputBufIndex = decoder.dequeueInputBuffer(TIMEOUT_USEC);
+                        Log.e("inputBufIndex", "===="+inputBufIndex);
+                    }
+//            mediaCodec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+//            mediaCodec.configure(format, null, null, 0);
+
+//                    int inputbufferindex = mediaCodec.dequeueInputBuffer(2500);
+
+//                    mediaCodec.queueInputBuffer();
+//                    mediaCodec.dequeueInputBuffer();
+                    // wait for processing to complete
+//            mediaCodec.stop();
+//            mediaCodec.release();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+    }
+
+    public native String stringFromJNI();
+
+    private MediaFormat getMediaFormatFrom() {
+        MediaExtractor extractor = new MediaExtractor();
+        MediaFormat mf = null;
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "/DCIM/Camera/VID_20200730_180248.mp4");
+            extractor.setDataSource(file.getAbsolutePath());
+//            extractor.setDataSource(file.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int numTracks = extractor.getTrackCount();
+        for (int i = 0; i < numTracks; i++) {
+            MediaFormat format = extractor.getTrackFormat(i);
+            String mime = format.getString(MediaFormat.KEY_MIME);
+            if (mime != null && mime.contains("video")) {
+                mf = format;
+                Log.e("numTracks===", "===" + i);
+            }
+        }
+        extractor.release();
+        return mf;
+    }
+
+    private static void selectCodec() {
+        MediaCodecList list = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            list = new MediaCodecList(REGULAR_CODECS);
+            MediaCodecInfo[] infos = list.getCodecInfos();
+            for (MediaCodecInfo m : infos) {
+                for (String type : m.getSupportedTypes()) {
+//                    Log.e("type  ====", "the selected encoder is :" +type);
+                }
+            }
+        }
+//        try {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                MediaMuxer muxer = new MediaMuxer("temp.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private RecyclerView recycler;
