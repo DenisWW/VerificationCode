@@ -31,13 +31,13 @@
         android:id="@+id/circle"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
         android:layout_below="@+id/jump1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:onClick="clickStart"
         android:scaleType="centerCrop"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:src="@mipmap/demo2" />
 
     <com.nineone.verificationcode.APngImageView
@@ -92,5 +92,9 @@
         </RelativeLayout>
     </com.nineone.verificationcode.view.ParentViewGroup>
 
+    <SurfaceView
+        android:id="@+id/view_surface"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
 </RelativeLayout>

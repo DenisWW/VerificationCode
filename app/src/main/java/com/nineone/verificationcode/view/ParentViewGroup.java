@@ -257,19 +257,16 @@ public class ParentViewGroup extends FrameLayout implements NestedScrollingParen
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        Log.e("onStartNestedScroll", "   target==="+target+"     =="+nestedScrollAxes+"     "+ViewCompat.SCROLL_AXIS_VERTICAL);
         return true;
     }
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int axes) {
         super.onNestedScrollAccepted(child, target, axes);
-        Log.e("onNestedScrollAccepted", "   target==="+target+"     =="+axes);
     }
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-        Log.e("onNestedScroll", "   target==="+target+"     dyConsumed=="+dyConsumed+"     dyUnconsumed=="+dyUnconsumed);
     }
 }
