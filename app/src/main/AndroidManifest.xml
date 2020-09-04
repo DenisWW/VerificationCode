@@ -7,6 +7,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,19 +19,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <service
-            android:name=".service.VideoCompressionService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".activity.BesselActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.ThreeActivity"></activity>
+        <activity android:name=".SecondActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.VideoCompressionService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activity.BesselActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

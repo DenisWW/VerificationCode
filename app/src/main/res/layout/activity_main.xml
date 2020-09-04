@@ -95,6 +95,17 @@
     <SurfaceView
         android:id="@+id/view_surface"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:visibility="gone" />
 
+    <com.nineone.verificationcode.view.SectorLoadingView
+        android:id="@+id/sector_view"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" />
 </RelativeLayout>

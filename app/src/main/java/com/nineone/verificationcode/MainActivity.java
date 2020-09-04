@@ -1,14 +1,5 @@
 package com.nineone.verificationcode;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.os.CancellationSignal;
-import androidx.core.view.ViewParentCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkManager;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,34 +7,23 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
-import android.graphics.Rect;
-import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.util.Size;
-import android.view.Surface;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,15 +35,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.annotation.ActAnnotation;
 import com.nineone.verificationcode.activity.BesselActivity;
-import com.nineone.verificationcode.service.VideoCompressionService;
-import com.nineone.verificationcode.utils.CodecInputSurface;
 import com.nineone.verificationcode.utils.Utils;
-import com.nineone.verificationcode.utils.VideoSlimEncoder;
 import com.nineone.verificationcode.view.DragImageView;
 import com.nineone.verificationcode.view.ParentViewGroup;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -71,29 +53,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import io.microshow.rxffmpeg.RxFFmpegInvoke;
-import io.microshow.rxffmpeg.RxFFmpegSubscriber;
-
-import static android.media.MediaCodec.BUFFER_FLAG_CODEC_CONFIG;
-import static android.media.MediaCodec.CONFIGURE_FLAG_ENCODE;
-import static android.media.MediaCodec.INFO_OUTPUT_FORMAT_CHANGED;
 import static android.media.MediaCodecList.REGULAR_CODECS;
-import static androidx.core.os.CancellationSignal.*;
-import static com.nineone.verificationcode.service.VideoCompressionService.VIDEO_PATH;
 
 @ActAnnotation(name = "TestMainActivity")
 public class MainActivity extends Activity {
@@ -107,6 +74,8 @@ public class MainActivity extends Activity {
     private final int TIMEOUT_USEC = 2500;
     MediaMuxer mMuxer;
 
+    private List da = new ArrayList();
+    private List da1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceType")
@@ -150,6 +119,12 @@ public class MainActivity extends Activity {
             }
         });
         parentViewGroup = findViewById(R.id.parent);
+        da.add("123456");
+        da.add("123456");
+        da.add("123456");
+        da1 = da;
+        da1.add(0, "2365343");
+        Log.e("dadadadadada", "===" + da);
 
         setAdapter();
         Utils.addActivity();
@@ -177,8 +152,6 @@ public class MainActivity extends Activity {
 //        -vf transpose = 0
 
 //        selectCodec();
-
-
 
 
 //        try {
@@ -355,10 +328,11 @@ public class MainActivity extends Activity {
 //                }
 //            }
 //        }.start();
-        Intent intent = new Intent(this, VideoCompressionService.class);
-        intent.putExtra(VIDEO_PATH, "/storage/emulated/0/DCIM/Camera/VID_20200730_180248.mp4");
+//        Intent intent = new Intent(this, VideoCompressionService.class);
+//        intent.putExtra(VIDEO_PATH, "/storage/emulated/0/DCIM/Camera/VID_20200730 _ 180248.mp4");
+//        intent.putExtra(VIDEO_PATH, "/storage/emulated/0/DCIM/ScreenRecorder/Screenrecorder-2020-08-29-00-47-02-56.mp4");
 //        intent.putExtra(VIDEO_PATH, "/storage/emulated/0/soul/1597047206579.mp4");
-        startService(intent);
+//        startService(intent);
 
 
         new Thread() {
@@ -378,16 +352,27 @@ public class MainActivity extends Activity {
                 while (cursor != null && cursor.moveToNext()) {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
                     Log.e("path==", path
-                                    +"    HEIGHT==="+cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.HEIGHT))
-                                    +"    WIDTH==="+cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.WIDTH))
-                                    +"    SIZE==="+cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
-                            );
+                            + "    HEIGHT===" + cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.HEIGHT))
+                            + "    WIDTH===" + cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.WIDTH))
+                            + "    SIZE===" + cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE))
+                    );
+                    File file = new File(path);
+                    if (!file.exists()) {
+                        Uri uri = Uri.fromFile(file);
+                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        intent.setData(uri);
+                        sendBroadcast(intent);
+                    }
+
+
                 }
 
                 if (cursor != null && !cursor.isClosed()) cursor.close();
             }
         }.start();
-
+        VideoView videoView = findViewById(R.id.video_view);
+        videoView.setVideoPath("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4");
+        videoView.start();
     }
 
     private void writeAutoTrack(MediaMuxer mMuxer, MediaCodec.BufferInfo info, MediaExtractor extractor) {
