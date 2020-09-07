@@ -237,11 +237,11 @@ public class VegaLayoutManager extends RecyclerView.LayoutManager {
             int pos = findFirstVisibleItemPosition() + i;
             Rect rect = locationRects.get(pos);
             int center = rect.top + rect.height() / 2;
-            Log.e("==", "findFirstVisibleItemPosition===" + locationRects.get(findFirstVisibleItemPosition() + i)
-                    + "   ==" + pos
-                    + "   ==" + scroll
-                    + "   ==" + center
-            );
+//            Log.e("==", "findFirstVisibleItemPosition===" + locationRects.get(findFirstVisibleItemPosition() + i)
+//                    + "   ==" + pos
+//                    + "   ==" + scroll
+//                    + "   ==" + center
+//            );
             if (view != null && center < scroll + getHeight()) {
                 setAnimatorSetOut(animatorSet, view, rect, j, startTop, j, pos);
                 j++;

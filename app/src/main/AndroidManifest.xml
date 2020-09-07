@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.ThreeActivity"></activity>
+        <activity android:name=".activity.FourActivity"></activity>
+        <activity android:name=".activity.ThreeActivity" />
         <activity android:name=".SecondActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
             android:exported="true" />
 
         <activity android:name=".activity.BesselActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

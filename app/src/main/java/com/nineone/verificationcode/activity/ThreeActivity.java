@@ -7,8 +7,6 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,9 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.annotation.RawRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,9 +32,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.nineone.verificationcode.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ThreeActivity extends Activity {
@@ -45,8 +43,7 @@ public class ThreeActivity extends Activity {
     private FrameLayout frame;
     private Context context;
     private TextView expand_bt;
-    private @IdRes
-    List<Integer> ids = new ArrayList<>();
+    LinkedList<SimpleBean> list = new LinkedList<>();
     private @IdRes
     static Integer[] idss = new Integer[]{
             R.mipmap.one,
@@ -76,6 +73,7 @@ public class ThreeActivity extends Activity {
     private boolean isExpand = false;
     private ImageView one_iv, two_iv;
     private VegaLayoutManager vegaLayoutManager;
+    private SimpleAdapter adapter;
 
     private void initView() {
         recycler = findViewById(R.id.recycler);
@@ -83,16 +81,12 @@ public class ThreeActivity extends Activity {
         one_iv = findViewById(R.id.one_iv);
         two_iv = findViewById(R.id.two_iv);
         frame = findViewById(R.id.frame);
-        ids = Arrays.asList(idss);
-
+        for (Integer i : idss) {
+            list.add(new SimpleBean(i));
+            outPos = i;
+        }
 
         RelativeLayout root = findViewById(R.id.root);
-        root.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.e("frame", "==" + frame.getChildCount());
-            }
-        });
 
 
         vegaLayoutManager = new VegaLayoutManager();
@@ -131,6 +125,7 @@ public class ThreeActivity extends Activity {
         vegaLayoutManager.listener = new VegaLayoutManager.OnHeightListener() {
             @Override
             public void onListener(int height) {
+                Log.e("onListener", "===" + height);
                 if (viewFirstHeight == 0) viewFirstHeight = root_View.getHeight();
                 if (height > viewFirstHeight) {
                     FrameLayout.LayoutParams rl1 = (FrameLayout.LayoutParams) root_View.getLayoutParams();
@@ -162,9 +157,9 @@ public class ThreeActivity extends Activity {
             }
         };
 
-        recycler.setAdapter(new SimpleAdapter());
+        recycler.setAdapter(adapter = new SimpleAdapter());
 //        recycler.scrollToPosition(15);
-        recycler.scrollToPosition(ids.size() - 5);
+        recycler.scrollToPosition(list.size() - 5);
         recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -182,14 +177,15 @@ public class ThreeActivity extends Activity {
 
         imageViews[0] = one_iv;
         imageViews[1] = two_iv;
-        Glide.with(context).load(ids.get(outPos % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
-        Glide.with(context).load(ids.get((outPos + 1) % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
+        Glide.with(context).load(list.getLast().resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
+        Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
 
         expand_bt = findViewById(R.id.expand_bt);
         expand_bt.setOnClickListener(v -> {
             if (isExpand) {
                 isExpand = false;
 //                vegaLayoutManager.stopAnimator(isExpand, one_iv.getTop(), animatorListenerAdapter);
+
                 vegaLayoutManager.stopAnimator(isExpand, 100, animatorListenerAdapter);
             } else {
                 if (objectAnimator != null && !objectAnimator.isRunning()) {
@@ -210,9 +206,7 @@ public class ThreeActivity extends Activity {
         isExpand = true;
         one_iv.setVisibility(View.GONE);
         two_iv.setVisibility(View.GONE);
-        if (outPos >= 0) {
-            recycler.scrollToPosition(ids.size() - 5);
-        }
+        recycler.scrollToPosition(list.size() - 5);
         recycler.setVisibility(View.VISIBLE);
 //                vegaLayoutManager.startAnimator(isExpand, one_iv.getTop());
         vegaLayoutManager.startAnimator(isExpand, 100);
@@ -226,30 +220,50 @@ public class ThreeActivity extends Activity {
 
     private boolean isNeedExpand;
 
-    private int outPos = 0;
+    private int outPos = -1;
 
     private AnimatorListenerAdapter animatorListenerAdapter = new AnimatorListenerAdapter() {
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
             recycler.setVisibility(View.INVISIBLE);
-            Glide.with(context).load(ids.get(outPos % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
-            Glide.with(context).load(ids.get((outPos + 1) % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
+
+            if (outPos >= 0 && outPos < list.size() - 1) {
+//                List<SimpleBean> simpleBeans = list.subList(outPos + 1, list.size());
+//                list.removeAll(simpleBeans);
+//                list.addAll(0, simpleBeans);
+//
+                for (int i = outPos + 1; i < list.size(); i++) {
+                    SimpleBean bean = list.getLast();
+                    list.removeLast();
+                    list.addFirst(bean);
+                }
+                outPos = -1;
+            }
+
+            Glide.with(context).load(list.getLast().resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
+            Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
             one_iv.setVisibility(View.VISIBLE);
             two_iv.setVisibility(View.VISIBLE);
+            mhandler.removeMessages(22);
             mhandler.sendEmptyMessageDelayed(22, 1500);
+            recycler.scrollToPosition(list.size() - 5);
 
         }
     };
+    private LinkedList<SimpleBean> simpleBeans;
     private Handler mhandler = new Handler() {
 
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 22) {
-                outPos++;
-                Glide.with(context).load(ids.get(outPos % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
-                Glide.with(context).load(ids.get((outPos + 1) % ids.size())).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
+                SimpleBean bean = list.getLast();
+                list.removeLast();
+                list.addFirst(bean);
+                adapter.notifyDataSetChanged();
+//                Glide.with(context).load(list.getLast().resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[0]);
+//                Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
                 startAnimal();
                 mhandler.sendEmptyMessageDelayed(22, 1500);
             }
@@ -260,7 +274,7 @@ public class ThreeActivity extends Activity {
 
     private void startAnimal() {
         objectAnimator = ObjectAnimator.ofInt(0, height);
-        objectAnimator.setDuration(400);
+        objectAnimator.setDuration(200);
         objectAnimator.addUpdateListener(animation -> {
             int value = (int) animation.getAnimatedValue();
             ImageView one = imageViews[0];
@@ -284,7 +298,8 @@ public class ThreeActivity extends Activity {
                 one.setScaleX(0.8f);
                 frame.addView(one, 1, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, height / 5 + 100));
                 ValueAnimator objectAnimator = ObjectAnimator.ofFloat(one, "translationY", 100, 0);
-                objectAnimator.setDuration(200);
+
+                objectAnimator.setDuration(100);
                 objectAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -295,10 +310,12 @@ public class ThreeActivity extends Activity {
                         }
                     }
                 });
-                objectAnimator.start();
                 imageViews = new ImageView[2];
                 imageViews[0] = two;
                 imageViews[1] = one;
+                Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
+                objectAnimator.start();
+
             }
         });
         objectAnimator.start();
@@ -318,14 +335,14 @@ public class ThreeActivity extends Activity {
         @Override
         public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
 //            holder.imageView.setImageResource(ids.get(position));
-            Glide.with(context).load(ids.get(position)).transform(new CenterCrop(), new RoundedCorners(25)).into(holder.imageView);
+            Glide.with(context).load(list.get(position).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(holder.imageView);
 
 
         }
 
         @Override
         public int getItemCount() {
-            return ids.size();
+            return list.size();
         }
 
 
@@ -386,7 +403,8 @@ public class ThreeActivity extends Activity {
             return custLayoutManager.findViewByPosition(custLayoutManager.findFirstVisibleItemPosition());
         }
     }
-//    private class MyLayout extends RecyclerView.LayoutManager {
+
+    //    private class MyLayout extends RecyclerView.LayoutManager {
 //        public OrientationHelper mVerticalHelper;
 //        private SparseArray<Rect> locationRects = new SparseArray<>();
 //        private SparseBooleanArray attachedItems = new SparseBooleanArray();
@@ -498,5 +516,15 @@ public class ThreeActivity extends Activity {
 //            new StartSnapHelper().attachToRecyclerView(view);
 //        }
 //    }
+    private class SimpleBean {
+        @RawRes
+        @DrawableRes
+        Integer resId;
 
+        String name;
+
+        public SimpleBean(int resId) {
+            this.resId = resId;
+        }
+    }
 }

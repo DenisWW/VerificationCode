@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nineone.verificationcode.activity.FourActivity;
 import com.nineone.verificationcode.activity.ThreeActivity;
 
 import java.lang.reflect.Array;
@@ -66,6 +67,7 @@ public class SecondActivity extends AppCompatActivity {
         button = findViewById(R.id.button_jump);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
+//            Intent intent = new Intent(SecondActivity.this, FourActivity.class);
             startActivity(intent);
         });
 
