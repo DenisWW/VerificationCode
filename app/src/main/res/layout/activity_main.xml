@@ -27,6 +27,15 @@
         android:onClick="junm1"
         android:text="飞碟动画" />
 
+    <Button
+        android:id="@+id/jump2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jump1"
+        android:layout_marginTop="10dp"
+        android:onClick="junm2"
+        android:text="自定义导航栏" />
+
     <com.nineone.verificationcode.view.CircleView
         android:id="@+id/circle"
         android:layout_width="70dp"
@@ -96,7 +105,7 @@
         android:id="@+id/view_surface"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <com.nineone.verificationcode.view.SectorLoadingView
         android:id="@+id/sector_view"
@@ -107,5 +116,8 @@
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:visibility="gone" />
+        android:visibility="visible" />
+
+
+
 </RelativeLayout>

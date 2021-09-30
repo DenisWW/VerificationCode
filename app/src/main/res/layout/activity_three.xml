@@ -21,7 +21,7 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 <!--        <ImageView-->
@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             android:scaleX="0.8" />
 
 
@@ -42,10 +43,12 @@
             android:id="@+id/one_iv"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:background="@color/black"
             android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/expand_bt"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

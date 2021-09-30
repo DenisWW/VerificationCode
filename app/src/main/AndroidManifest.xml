@@ -8,6 +8,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"
+        tools:node="replace" />
+    <uses-permission
+        android:name="android.permission.ACCESS_BACKGROUND_LOCATION"
+        tools:node="replace" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:node="replace" />
+    <uses-permission
+        android:name="android.permission.ACCESS_MOCK_LOCATION"
+        tools:ignore="MockLocation,ProtectedPermissions"
+        tools:node="replace" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -19,15 +33,41 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.FourActivity"></activity>
-        <activity android:name=".activity.ThreeActivity" />
-        <activity android:name=".SecondActivity">
+        <activity android:name=".activity.SixeActivity"></activity>
+
+        <service
+            android:name=".AIDLService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":service"></service>
+
+        <activity android:name=".activity.KotlinActivity">
+
+            <!-- android:launchMode="singleTask" 一起使用才有作用     android:taskAffinity="com.android.aa" -->
+
+        </activity>
+        <activity
+            android:name=".activity.FiveActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activity.MineActivity" />
+        <activity android:name=".activity.FourActivity" />
+        <activity
+            android:name=".activity.ThreeActivity"
+            android:taskAffinity="why.w"
+            />
+        <activity android:name=".SecondActivity" />
 
         <service
             android:name=".service.VideoCompressionService"

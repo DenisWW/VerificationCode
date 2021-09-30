@@ -66,8 +66,8 @@ public class SecondActivity extends AppCompatActivity {
         six_iv = findViewById(R.id.six_iv);
         button = findViewById(R.id.button_jump);
         button.setOnClickListener(v -> {
-            Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
-//            Intent intent = new Intent(SecondActivity.this, FourActivity.class);
+//            Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
+            Intent intent = new Intent(SecondActivity.this, FourActivity.class);
             startActivity(intent);
         });
 

@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -119,7 +120,8 @@ public class ThreeActivity extends Activity {
 
         });
         one_iv.setOnClickListener(v -> {
-
+            Intent intent = new Intent(context, SixeActivity.class);
+            startActivity(intent);
         });
         recycler.setLayoutParams(rl);
         vegaLayoutManager.listener = new VegaLayoutManager.OnHeightListener() {
@@ -197,7 +199,7 @@ public class ThreeActivity extends Activity {
             }
 //            startAnimal();
         });
-        mhandler.sendEmptyMessageDelayed(22, 1500);
+//        mhandler.sendEmptyMessageDelayed(22, 1500);
 
     }
 
