@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 import java.util.concurrent.ThreadFactory;
 
 public class APngImageView extends androidx.appcompat.widget.AppCompatImageView {

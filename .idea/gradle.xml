@@ -7,13 +7,19 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/TestD" />
             <option value="$PROJECT_DIR$/annotation" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/apptest" />
             <option value="$PROJECT_DIR$/groovyLib" />
             <option value="$PROJECT_DIR$/processor-compiler" />
+            <option value="$PROJECT_DIR$/testC" />
+            <option value="$PROJECT_DIR$/testa" />
+            <option value="$PROJECT_DIR$/testb" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

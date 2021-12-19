@@ -1,43 +1,52 @@
-package com.nineone.verificationcode;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
+package com.nineone.verificationcode.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.nineone.verificationcode.activity.FourActivity;
-import com.nineone.verificationcode.activity.ThreeActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
-import java.lang.reflect.Array;
+import com.bumptech.glide.Glide;
+import com.nineone.verificationcode.R;
+import com.nineone.verificationcode.bean.GetTest;
+import com.nineone.verificationcode.utils.Utils;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SecondActivity extends AppCompatActivity {
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
+import retrofit2.Retrofit;
+
+public class SecondActivity extends Activity {
     private Button button;
     private Button video_button;
     private TextView expand_bt;
@@ -57,6 +66,142 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         context = this;
         init();
+        Glide.with(this).load("").into(six_iv);
+        String url = "http://wwww.baidu.com";
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(new Converter.Factory() {
+            @Override
+            public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+
+                return new Converter<ResponseBody, String>() {
+                    @org.jetbrains.annotations.Nullable
+                    @Override
+                    public String convert(ResponseBody value) throws IOException {
+                        String responseBody = value.string();
+                        Log.e("responseBody", "===" + responseBody);
+                        return responseBody;
+                    }
+                };
+            }
+        }).build();
+
+        GetTest test = retrofit.create(GetTest.class);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                retrofit2.Call<String> call = test.getBaidu();
+                try {
+                    call.execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
+//        retrofit.create(GetTest.class);
+//        Executors.newFixedThreadPool()
+//        Looper.prepare();
+//        Looper.loop();
+
+//       new Handler().sendEmptyMessageAtTime();
+//        Lock lock=new ReentrantLock();
+//        lock.lockInterruptibly();
+        GetTest getTest = Utils.create(GetTest.class);
+        getTest.getTest("12131");
+//        Thread thread=Thread.currentThread();
+//
+//        io.reactivex.rxjava3.core.Observable observable = null;
+//        observable.subscribe(new Consumer() {
+//            @Override
+//            public void accept(Object o) throws Throwable {
+//
+//            }
+//        });
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Response response = chain.proceed(request);
+                Log.e("response", "===" + response.code());
+                return response;
+            }
+        });
+        builder.retryOnConnectionFailure(true);
+        OkHttpClient myClient = builder.build();
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()//默认就是GET请求，可以不写
+                .build();
+        myClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+        Thread thread1 = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.e("thread1", "=====" + System.currentTimeMillis());
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+        Thread thread2 = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Log.e("thread2", "=====" + System.currentTimeMillis());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread thread3 = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    thread1.start();
+                    thread2.start();
+                    thread1.wait();
+                    thread2.join();
+                } catch (InterruptedException e) {
+                    thread1.interrupt();
+                    thread2.interrupt();
+                    e.printStackTrace();
+                }
+                Log.e("thread3", "--====" + System.currentTimeMillis());
+
+
+            }
+        };
+        thread3.start();
+
+//        Log.e(getBaseContext().toString(), "    =====" +o);
+//        getInteger(2);
     }
 
     private void init() {
@@ -64,6 +209,7 @@ public class SecondActivity extends AppCompatActivity {
         bottom_rl = findViewById(R.id.bottom_rl);
         child_rl = findViewById(R.id.child_rl);
         six_iv = findViewById(R.id.six_iv);
+        six_iv.invalidate();
         button = findViewById(R.id.button_jump);
         button.setOnClickListener(v -> {
 //            Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
@@ -74,12 +220,25 @@ public class SecondActivity extends AppCompatActivity {
         video_button = findViewById(R.id.video_button);
 
         video_button.setOnClickListener(v -> {
-            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            //好使
-            intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 10485760L);
-            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
-            startActivityForResult(intent, VIDEO_CAPTURE);
+            Log.e("setOnClickListener", "position");
+//            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+//            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+//            //好使
+//            intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 10485760L);
+//            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+//            startActivityForResult(intent, VIDEO_CAPTURE);
+        });
+        video_button.setOnTouchListener((v, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Log.e("setOnTouchListener", "ACTION_DOWN");
+                return false;
+            }
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                Log.e("setOnTouchListener", "ACTION_UP");
+                return true;
+            }
+            return false;
         });
 
 //        views.add(findViewById(R.id.six_iv));
@@ -256,6 +415,19 @@ public class SecondActivity extends AppCompatActivity {
             cursor.moveToNext();
             Log.e("cursor", "====" + cursor.getString(cursor.getColumnIndex("_data")));
         }
+
+    }
+
+
+    public int getInteger(int i) {
+        if (i == 5) {
+            return i;
+        }
+        i++;
+        Log.e("getInteger1", "===" + i);
+        getInteger(i);
+        Log.e("getInteger2", "===" + i);
+        return i;
 
     }
 }

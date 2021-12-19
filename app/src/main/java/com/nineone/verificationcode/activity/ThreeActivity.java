@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.nineone.verificationcode.MainActivity;
 import com.nineone.verificationcode.R;
 
 import java.util.ArrayList;
@@ -67,8 +68,92 @@ public class ThreeActivity extends Activity {
         context = this;
         initView();
 //        System.loadLibrary("ijkffmpeg");
+//        int[] array = {1, 54, 5, -5, 15, 67, 16, 23};
+//        QuickSort(array, 0, array.length - 1);
+//        for (int i : array) {
+//            Log.e("array11", "-----" + i);
+//        }
+        BB();
     }
 
+    public void BB() {
+        //物品价值,重量,和背包承重
+        int[] v = {0, 8, 10, 6, 3, 7, 2};
+        int[] w = {0, 4, 6, 2, 2, 5, 1};
+        int c = 12;
+
+        //定义二位数组动态规划背包价值和重量
+        int[][] m = new int[v.length][c + 1];
+        String s = "";
+        for (int i = 1; i < v.length; i++) {
+
+            for (int j = 1; j <= c; j++) {
+                if (j >= w[i]) {
+                    Log.e("i----", i + "   j----" + j + "  w[i]--" + w[i] + "   " + (m[i - 1][j - w[i]] + v[i]) + "   " + (m[i - 1][j]));
+                    m[i][j] = Math.max(m[i - 1][j - w[i]] + v[i], m[i - 1][j]);
+                } else
+                    m[i][j] = m[i - 1][j];
+                s += (m[i][j] + "  ");
+            }
+            s += "\n";
+        }
+
+        int max = 0;
+        for (int i = 0; i < v.length; i++) {
+            for (int j = 0; j <= c; j++) {
+                if (m[i][j] > max)
+                    max = m[i][j];
+            }
+        }
+        Log.e("   ", "----" + s + "    max= " + max);
+    }
+
+    /**
+     * 选取一个关键字(key)作为枢轴，一般取整组记录的第一个数/最后一个，这里采用选取序列最后一个数为枢轴。
+     * 设置两个变量left = 0;right = N - 1;
+     * 从left一直向后走，直到找到一个大于key的值，right从后至前，直至找到一个小于key的值，然后交换这两个数。
+     * 重复第三步，一直往后找，直到left和right相遇，这时将key放置left的位置即可。
+     *
+     * @param array {1,5,-5,54,15,67,16,23}
+     * @param left
+     * @param right
+     * @return
+     */
+    public int PartSort(int[] array, int left, int right) {
+        int key = array[right];//定义基准
+        int count = right;//保存rigth值
+        while (left < right)//防止数组越界
+        {
+            while (left < right && array[left] <= key) {
+                ++left;
+            }
+            while (left < right && array[right] >= key) {
+                --right;
+            }
+            Log.e("PartSort1111---", "---" + left + "    right=" + right);
+            swap(array, left, right);
+        }
+        swap(array, right, count);
+        Log.e("PartSort2222---", "- right --" + right + "    count=" + count);
+        return left;
+
+    }
+
+    void QuickSort(int array[], int left, int right) {
+        if (left >= right)//表示已经完成一个组
+        {
+            return;
+        }
+        int index = PartSort(array, left, right);//枢轴的位置
+        QuickSort(array, left, index - 1);
+        QuickSort(array, index + 1, right);
+    }
+
+    void swap(int A[], int i, int j) {
+        int temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
+    }
 
     private int height, viewFirstHeight;
     private boolean isExpand = false;
@@ -120,7 +205,7 @@ public class ThreeActivity extends Activity {
 
         });
         one_iv.setOnClickListener(v -> {
-            Intent intent = new Intent(context, SixeActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
         });
         recycler.setLayoutParams(rl);
@@ -187,7 +272,6 @@ public class ThreeActivity extends Activity {
             if (isExpand) {
                 isExpand = false;
 //                vegaLayoutManager.stopAnimator(isExpand, one_iv.getTop(), animatorListenerAdapter);
-
                 vegaLayoutManager.stopAnimator(isExpand, 100, animatorListenerAdapter);
             } else {
                 if (objectAnimator != null && !objectAnimator.isRunning()) {
@@ -199,7 +283,7 @@ public class ThreeActivity extends Activity {
             }
 //            startAnimal();
         });
-//        mhandler.sendEmptyMessageDelayed(22, 1500);
+        mhandler.sendEmptyMessageDelayed(22, 1500);
 
     }
 
@@ -315,7 +399,8 @@ public class ThreeActivity extends Activity {
                 imageViews = new ImageView[2];
                 imageViews[0] = two;
                 imageViews[1] = one;
-                Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
+                if (!isFinishing())
+                    Glide.with(context).load(list.get(list.size() - 2).resId).transform(new CenterCrop(), new RoundedCorners(25)).into(imageViews[1]);
                 objectAnimator.start();
 
             }
@@ -518,7 +603,7 @@ public class ThreeActivity extends Activity {
 //            new StartSnapHelper().attachToRecyclerView(view);
 //        }
 //    }
-    private class SimpleBean {
+    public class SimpleBean {
         @RawRes
         @DrawableRes
         Integer resId;

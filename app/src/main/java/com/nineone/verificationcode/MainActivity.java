@@ -30,6 +30,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.SpannableString;
@@ -37,6 +39,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -68,6 +71,7 @@ import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
+import com.bumptech.glide.Glide;
 import com.example.annotation.ActAnnotation;
 import com.nineone.verificationcode.activity.BesselActivity;
 import com.nineone.verificationcode.activity.MineActivity;
@@ -80,6 +84,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.File;
@@ -87,10 +92,15 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import io.microshow.rxffmpeg.RxFFmpegInvoke;
+import okhttp3.OkHttp;
+import retrofit2.http.GET;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.media.MediaCodecList.REGULAR_CODECS;
@@ -111,14 +121,12 @@ public class MainActivity extends Activity {
     private MediaFormat mOutputFormat;
     private final int TIMEOUT_USEC = 2500;
     MediaMuxer mMuxer;
-
-    private List da = new ArrayList();
-    private List da1;
+    private HashMap<String, String> hashMap = new HashMap<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("onActivityResult", "===" + requestCode);
+
     }
 
     @Override
@@ -144,29 +152,30 @@ public class MainActivity extends Activity {
         final ImageView circle = findViewById(R.id.circle);
         seekBar.setMax(1000);
         mine_iv.getBgImageView().setImageResource(R.mipmap.demo2);
-        SurfaceView view_surface = findViewById(R.id.view_surface);
-        view_surface.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                Log.e(" surfaceCreated", "===" + holder.getSurface());
-                MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this,
-                        Uri.parse("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4"),
-                        holder);//创建MediaPlayer对象
-                mediaPlayer.start();
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                Log.e(" surfaceChanged", "===" + holder.getSurface());
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                Log.e(" surfaceDestroyed", "===" + holder.getSurface());
-            }
-        });
-
+//       SurfaceView view_surface = findViewById(R.id.view_surface);
+//        view_surface.getHolder().addCallback(new SurfaceHolder.Callback() {
+//            @Override
+//            public void surfaceCreated(SurfaceHolder holder) {
+//                Log.e(" surfaceCreated", "===" + holder.getSurface());
+//                MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this,
+//                        Uri.parse("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4"),
+//                        holder);//创建MediaPlayer对象
+//                mediaPlayer.start();
+//
+//            }
+//
+//            @Override
+//            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+//                Log.e(" surfaceChanged", "===" + holder.getSurface());
+//            }
+//
+//            @Override
+//            public void surfaceDestroyed(SurfaceHolder holder) {
+//                Log.e(" surfaceDestroyed", "===" + holder.getSurface());
+//            }
+//        });
+        Handler handler = new Handler();
+//        handler.sendEmptyMessage();
         mine_iv.getProgressImageView().setImageResource(R.mipmap.demo2);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -192,11 +201,6 @@ public class MainActivity extends Activity {
             }
         });
         parentViewGroup = findViewById(R.id.parent);
-        da.add("123456");
-        da.add("123456");
-        da.add("123456");
-        da1 = da;
-        da1.add(0, "2365343");
 
         setAdapter();
         Utils.addActivity();
@@ -215,9 +219,7 @@ public class MainActivity extends Activity {
 //            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 100);
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         }
-
-        startService(new Intent(this, LocationService.class));
-
+        Lock lock = new ReentrantLock();
 
 //        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 //        Log.e("Location", "===" + location);
@@ -318,9 +320,9 @@ public class MainActivity extends Activity {
 //                if (cursor != null && !cursor.isClosed()) cursor.close();
 //            }
 //        }.start();
-        VideoView videoView = findViewById(R.id.video_view);
-        videoView.setVideoPath("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4");
-        videoView.start();
+//        VideoView videoView = findViewById(R.id.video_view);
+//        videoView.setVideoPath("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4");
+//        videoView.start();
     }
 
     public native String stringFromJNI();
@@ -372,7 +374,6 @@ public class MainActivity extends Activity {
         recycler1 = findViewById(R.id.recycler1);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler1.setLayoutManager(new LinearLayoutManager(this));
-
         recycler.setAdapter(adapter = new SimpleAdapter());
         recycler1.setAdapter(adapter);
         adapter.setList();
@@ -544,4 +545,11 @@ public class MainActivity extends Activity {
 
     public static ArrayBlockingQueue<byte[]> YUVQueue = new ArrayBlockingQueue<byte[]>(yuvqueuesize);
 
+    /**
+     * 无论参数是否为null返回结果一定不为null
+     */
+    @NotNull
+    public String getTest(@Nullable String tests) {
+        return tests != null ? tests : "";
+    }
 }

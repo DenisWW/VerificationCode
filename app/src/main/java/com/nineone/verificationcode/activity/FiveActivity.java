@@ -1,23 +1,18 @@
 package com.nineone.verificationcode.activity;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -26,16 +21,10 @@ import com.nineone.verificationcode.AIDLService;
 import com.nineone.verificationcode.BookController;
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.adapter.ViewPagerAdapter2;
-import com.nineone.verificationcode.bean.Book;
 import com.nineone.verificationcode.fragment.TestFragment;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class FiveActivity extends FragmentActivity {
     private List<UserBean> strings = new ArrayList<>();
@@ -50,6 +39,8 @@ public class FiveActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_five);
+
+
 //        SurfaceView view_surface = findViewById(R.id.view_surface);
 //        MediaPlayer mediaPlayer = new MediaPlayer();
 //
@@ -131,17 +122,16 @@ public class FiveActivity extends FragmentActivity {
 
         }
         adapter2.setFragments(fragments);
-
 //        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 //        List<ActivityManager.RunningTaskInfo> runningTasks = manager.getRunningTasks(1);
 //        ActivityManager.RunningTaskInfo cinfo = runningTasks.get(0);
 
         Log.e("         =========" + this.getClass().getName(), "     onCreate==" + iv.getBackground());
-        animationDrawable= (AnimationDrawable) iv.getBackground();
+        animationDrawable = (AnimationDrawable) iv.getBackground();
         Intent intent = new Intent(this, AIDLService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
         findViewById(R.id.button_view).setOnClickListener(v -> {
-            Intent intent1 =new Intent(this,ThreeActivity.class);
+            Intent intent1 = new Intent(this, ThreeActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent1);
 //            animationDrawable.start();

@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -33,7 +35,16 @@ public class MineActivity extends FragmentActivity {
         init();
     }
 
+    private class MyHandler extends Handler {
+        @Override
+        public void dispatchMessage(@NonNull Message msg) {
+            super.dispatchMessage(msg);
+
+        }
+    }
+
     private void init() {
+
         mine_vg = findViewById(R.id.mine_vg);
         vp = findViewById(R.id.vp);
         adapter = new Adapter(getSupportFragmentManager());
@@ -62,7 +73,7 @@ public class MineActivity extends FragmentActivity {
 
     }
 
-    public class Adapter extends FragmentPagerAdapter {
+    public  class Adapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments;
         private List<String> names;

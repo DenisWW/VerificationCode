@@ -3,7 +3,9 @@ package com.nineone.verificationcode.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.nineone.verificationcode.R
+import com.nineone.verificationcode.service.SPUtils
 import com.nineone.verificationcode.utils.RetrofitCoroutineDSL
 import com.nineone.verificationcode.utils.SimpleData
 import kotlinx.coroutines.*
@@ -12,8 +14,13 @@ import java.util.*
 import kotlin.concurrent.thread
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.ContinuationInterceptor
+import  kotlinx.android.synthetic.main.activity_kotlin.*
 
 class KotlinActivity : AppCompatActivity() {
+    var list: ArrayList<String>? = null;
+    var a = 0;
+    var b = 1;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
@@ -24,13 +31,29 @@ class KotlinActivity : AppCompatActivity() {
         Log.e(localClassName, "$job+             +${simpleData}")
 
         val (sex) = simpleData;
-        val myThrea = thread { }
-        val myThread = Thread {
-
+        val my = thread { }
+        val myThread = object : Thread() {
+            override fun run() {
+                super.run()
+            }
         }.start()
+        b = (a + b);
+        var v = b.rangeTo(10);
+        Log.e("v", "=====" + v);
+//        if (a + b > 0) {
+//
+//        }
+        tv_test.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
     }
 
     private fun test() = runBlocking {
+
         Log.e(
             localClassName,
             "协程执行:${Thread.currentThread().name + "      id==" + Thread.currentThread().id}"
@@ -60,9 +83,12 @@ class KotlinActivity : AppCompatActivity() {
                 localClassName,
                 "协程执行4:${Thread.currentThread().name + "      id==" + Thread.currentThread().id}"
             )
+
         }
+        launch { }
         val t = one.await() + two.await()
         Log.e(localClassName, "===${t}+“          ”+${getName()}");
+
     }
 
     private suspend fun testSuspend() {
@@ -70,7 +96,6 @@ class KotlinActivity : AppCompatActivity() {
     }
 
     private suspend fun getName(): String {
-
 
         return "mingzi";
 
@@ -98,4 +123,4 @@ class KotlinActivity : AppCompatActivity() {
 
 }
 
-typealias UserCall = (SimpleData)->Unit
+typealias UserCall = (SimpleData) -> Unit

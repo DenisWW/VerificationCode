@@ -10,10 +10,12 @@
         android:id="@+id/mine_iv"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:visibility="gone" />
 
     <SeekBar
         android:id="@+id/seek_bar"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_below="@+id/mine_iv" />
@@ -47,13 +49,15 @@
         android:scaleType="centerCrop"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:src="@mipmap/demo2" />
+        android:src="@mipmap/demo2"
+        android:visibility="gone" />
 
     <com.nineone.verificationcode.APngImageView
         android:id="@+id/gif_iv"
         android:layout_width="157dp"
         android:layout_height="26dp"
-        android:layout_below="@+id/circle" />
+        android:layout_below="@+id/circle"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/edit_view"
@@ -65,6 +69,7 @@
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_view">
 
         <LinearLayout
@@ -105,7 +110,7 @@
         android:id="@+id/view_surface"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <com.nineone.verificationcode.view.SectorLoadingView
         android:id="@+id/sector_view"
@@ -116,8 +121,7 @@
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:visibility="visible" />
-
+        android:visibility="gone" />
 
 
 </RelativeLayout>

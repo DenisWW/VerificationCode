@@ -38,6 +38,7 @@ public class AIDLService extends Service {
         list.add(book4);
         list.add(book5);
         list.add(book6);
+
     }
 
     @Override

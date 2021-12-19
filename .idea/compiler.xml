@@ -6,8 +6,14 @@
       <module name="groovyLib" target="1.7" />
       <module name="processor-compiler" target="1.7" />
       <module name="VerificationCode.app" target="1.8" />
+      <module name="VerificationCode.apptest" target="1.8" />
       <module name="VerificationCode.Demo" target="1.8" />
+      <module name="VerificationCode.myapplication" target="1.8" />
       <module name="VerificationCode.processor-compiler" target="1.8" />
+      <module name="VerificationCode.testa" target="1.8" />
+      <module name="VerificationCode.testb" target="1.8" />
+      <module name="VerificationCode.testC" target="1.8" />
+      <module name="VerificationCode.TestD" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
