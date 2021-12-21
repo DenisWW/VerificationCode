@@ -24,8 +24,10 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.nineone.verificationcode.ImageLoader.ImageCacheType;
+import com.nineone.verificationcode.ImageLoader.ImageDownListener;
 import com.nineone.verificationcode.ImageLoader.ImageLoader;
 import com.nineone.verificationcode.ImageLoader.ImageScaleType;
+import com.nineone.verificationcode.ImageLoader.ProgressListener;
 import com.nineone.verificationcode.R;
 
 import java.io.File;
@@ -67,8 +69,8 @@ public class SixeActivity extends AppCompatActivity {
             }
         });
         Glide.with(this).load("")
-                .placeholder(R.mipmap.demo2)
-                .error(R.mipmap.demo2)
+                .placeholder(R.mipmap.loading)
+                .error(R.mipmap.loading)
                 .circleCrop()
                 .optionalCenterCrop()
                 .centerCrop()
@@ -123,18 +125,45 @@ public class SixeActivity extends AppCompatActivity {
 //                .fitCenter()
 //                .into(imageView);
 //        DoKitSPUtil
-        ImageLoader.load(context, R.string.app_name)
-                .placeholder(R.mipmap.demo2)
-                .round(15.f)
-                .timeout(100)
-                .error(R.mipmap.demo2)
-                .scaleType(ImageScaleType.CENTER_INSIDE)
-                .diskCacheStrategy(ImageCacheType.ALL)
-        ;
+        ImageLoader.load(context, "网络图片url")//根据不同业务需要使用不同方法例如下载 例如 加载gif 使用loadGif
+                .placeholder(R.mipmap.loading)//加载图片时到默认占位图
+                .round(15.f)//圆角dp
+                .error(R.mipmap.error)//加载失败时占位图
+                .scaleType(ImageScaleType.CENTER_INSIDE)//加载图片的展示方式
+                .diskCacheStrategy(ImageCacheType.AUTOMATIC)//加载图片的缓存方式
+                .into(new ImageView(context));//加载到具体图片显示控件上
 //                .into(new ImageView(this));
 
+        //取消Glide可能为视图加载的任何挂起的加载，并释放可能已为视图加载的任何资源。
         ImageLoader.clear(context, new ImageView(this));
-        ImageLoader.downLoad(context, "", "").down();
+        ImageLoader.downLoad(context, "图片url", "下载本地路径").listener(new ImageDownListener() {
+            //下载开始
+            @Override
+            public void onDownStarted(String url, String targetPath) {
+
+            }
+
+            //下载失败
+            @Override
+            public void onDownFailed(String url, String targetPath, String exceptionMessage) {
+
+            }
+
+            //下载成功
+            @Override
+            public void onDownSuccess(String url, String targetPath) {
+
+            }
+        }).progressListener(new ProgressListener() {
+            /**
+             * 下载进度监听
+             * @param progress 进度值0-100
+             */
+            @Override
+            public void onProgress(int progress) {
+
+            }
+        }).down();//开始下载
         HttpGlideUrlLoader httpGlideUrlLoader;
     }
 }

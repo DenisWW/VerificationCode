@@ -1,6 +1,7 @@
 package com.nineone.verificationcode.ImageLoader;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -10,6 +11,8 @@ import androidx.annotation.RawRes;
 
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 
+import java.io.File;
+
 public class ImageLoader {
     //displayImage
     public static ImageLoadBuilder load(@NonNull Context context, @Nullable String url) {
@@ -18,6 +21,14 @@ public class ImageLoader {
 
     public static ImageLoadBuilder load(@NonNull Context context, @RawRes @DrawableRes @Nullable Integer res) {
         return new ImageLoadBuilder(context).load(res);
+    }
+
+    public static ImageLoadBuilder load(@NonNull Context context, @Nullable File file) {
+        return new ImageLoadBuilder(context).load(file);
+    }
+
+    public static ImageLoadBuilder load(@NonNull Context context,  @Nullable Uri uri) {
+        return new ImageLoadBuilder(context).load(uri);
     }
 
     public static ImageLoadBuilder loadGif(@NonNull Context context, @Nullable String url) {

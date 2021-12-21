@@ -135,7 +135,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@color/trans1"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/two" />
+                    android:src="@mipmap/error" />
 
 
             </RelativeLayout>
