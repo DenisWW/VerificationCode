@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <com.nineone.verificationcode.view.DragImageView
         android:id="@+id/mine_iv"
@@ -52,7 +52,7 @@
         android:src="@mipmap/loading"
         android:visibility="gone" />
 
-    <com.nineone.verificationcode.APngImageView
+    <com.nineone.verificationcode.apng.APngImageView
         android:id="@+id/gif_iv"
         android:layout_width="157dp"
         android:layout_height="26dp"

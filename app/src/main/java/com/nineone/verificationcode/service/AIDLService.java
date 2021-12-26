@@ -1,4 +1,4 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.nineone.verificationcode.BookController;
 import com.nineone.verificationcode.bean.Book;
 
 import java.util.ArrayList;

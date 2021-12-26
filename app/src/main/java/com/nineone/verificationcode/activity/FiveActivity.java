@@ -17,7 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.nineone.verificationcode.AIDLService;
+import com.nineone.verificationcode.bean.UserBean;
+import com.nineone.verificationcode.service.AIDLService;
 import com.nineone.verificationcode.BookController;
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.adapter.ViewPagerAdapter2;
@@ -295,29 +296,4 @@ public class FiveActivity extends FragmentActivity {
 //        animator.start();
     }
 
-    public class UserBean {
-        private String name;
-        private int age;
-
-        public UserBean(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-    }
 }

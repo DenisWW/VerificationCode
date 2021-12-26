@@ -1,12 +1,8 @@
 package com.nineone.verificationcode.service;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,8 +11,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.nineone.verificationcode.MainActivity;
 
 import java.util.List;
 

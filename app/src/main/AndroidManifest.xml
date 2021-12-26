@@ -33,20 +33,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m"
-        tools:replace="android:theme">
-        <activity android:name=".activity.WebViewActivity"
-            android:exported="true">
+        tools:replace="android:theme"
+        tools:targetApi="m">
+        <activity
+            android:name=".activity.ImageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:exported="true">
+
         </activity>
         <activity android:name=".activity.SixeActivity" />
 
         <service
-            android:name=".AIDLService"
+            android:name=".service.AIDLService"
             android:enabled="true"
             android:exported="true"
             android:process=":service" />
@@ -58,7 +64,7 @@
         </activity>
         <activity
             android:name=".activity.FiveActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
 
         <service
             android:name=".service.LocationService"
@@ -69,10 +75,8 @@
         <activity android:name=".activity.FourActivity" />
         <activity
             android:name=".activity.ThreeActivity"
-            android:taskAffinity="why.w"></activity>
-        <activity android:name=".activity.SecondActivity">
-
-        </activity>
+            android:taskAffinity="why.w" />
+        <activity android:name=".activity.SecondActivity"></activity>
 
         <service
             android:name=".service.VideoCompressionService"
@@ -80,7 +84,16 @@
             android:exported="true" />
 
         <activity android:name=".activity.BesselActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <provider
+            android:authorities="com.nineone.verificationcode.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.nineone.verificationcode"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -70,6 +70,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0-alpha03'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation project(path: ':annotation')
+    implementation fileTree('libs/imageloader-release.aar')
     annotationProcessor project(path: ':processor-compiler')
 
     //kotlin 协程库

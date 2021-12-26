@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/one" />
+                android:src="@mipmap/placeholder" />
 
         </RelativeLayout>
 

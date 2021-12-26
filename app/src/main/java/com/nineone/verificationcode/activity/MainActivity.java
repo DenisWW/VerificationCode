@@ -1,4 +1,4 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -37,8 +37,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.annotation.ActAnnotation;
-import com.nineone.verificationcode.activity.BesselActivity;
-import com.nineone.verificationcode.activity.MineActivity;
+import com.nineone.verificationcode.apng.APngImageView;
+import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.utils.Utils;
 import com.nineone.verificationcode.view.DragImageView;
 import com.nineone.verificationcode.view.ParentViewGroup;
