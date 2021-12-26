@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.*
 import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.google.gson.Gson
 import com.nineone.verificationcode.R
 import kotlinx.android.synthetic.main.activity_web_view.*
@@ -54,10 +57,11 @@ class WebViewActivity : Activity() {
 //                TODO("Not yet implemented")
 //            }
 //        });
-        js_tv.setOnClickListener {
-//            web_view.loadUrl("javascript:window.jzsec.postMessage('test')")
-
-        };
+//        js_tv.setOnClickListener {
+////            web_view.loadUrl("javascript:window.jzsec.postMessage('test')")
+//
+//        };
+        Glide.with(this).load(R.mipmap.demo2).transform(CenterCrop(),GranularRoundedCorners(30f,30f,30f,30f)).into(js_tv);
     }
 
     override fun onResume() {

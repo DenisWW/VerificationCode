@@ -16,6 +16,7 @@ import androidx.annotation.RawRes;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.MultiTransformation;
 
 import java.io.File;
 
@@ -27,6 +28,7 @@ public class ImageLoadBuilder {
 
     ImageLoadBuilder(Context context) {
         manager = Glide.with(context);
+
     }
 
     /**
@@ -56,6 +58,7 @@ public class ImageLoadBuilder {
     public void preload(int width, int height) {
         if (options != null) request.apply(options.build());
         request.preload(width, height);
+        MultiTransformation multiTransformation=new MultiTransformation();
     }
 
     public ImageLoadBuilder placeholder(@RawRes @DrawableRes @Nullable Integer res) {
