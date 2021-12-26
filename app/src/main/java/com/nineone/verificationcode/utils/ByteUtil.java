@@ -1,4 +1,4 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.apng;
 
 import android.util.Log;
 

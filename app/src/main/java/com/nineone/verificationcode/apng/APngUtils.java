@@ -1,9 +1,6 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.apng;
 
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
 import android.widget.ImageView;
 
 import androidx.annotation.RawRes;

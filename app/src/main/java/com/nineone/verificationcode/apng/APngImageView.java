@@ -1,4 +1,4 @@
-package com.nineone.verificationcode;
+package com.nineone.verificationcode.apng;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.nineone.verificationcode.R;
+
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
-import java.util.WeakHashMap;
-import java.util.concurrent.ThreadFactory;
 
 public class APngImageView extends androidx.appcompat.widget.AppCompatImageView {
     StandardAPngDecoder decoder;

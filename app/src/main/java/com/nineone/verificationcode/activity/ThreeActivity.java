@@ -31,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.nineone.verificationcode.MainActivity;
 import com.nineone.verificationcode.R;
 
 import java.util.LinkedList;
@@ -46,12 +45,12 @@ public class ThreeActivity extends Activity {
     LinkedList<SimpleBean> list = new LinkedList<>();
     private @IdRes
     static Integer[] idss = new Integer[]{
-            R.mipmap.one,
+            R.mipmap.placeholder,
             R.mipmap.error,
             R.mipmap.three,
             R.mipmap.four,
             R.mipmap.five,
-            R.mipmap.one,
+            R.mipmap.placeholder,
             R.mipmap.error,
             R.mipmap.three,
             R.mipmap.four,
