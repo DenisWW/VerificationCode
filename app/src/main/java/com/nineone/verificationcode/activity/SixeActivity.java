@@ -24,8 +24,10 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.nineone.verificationcode.ImageLoader.ImageCacheType;
+import com.nineone.verificationcode.ImageLoader.ImageDownListener;
 import com.nineone.verificationcode.ImageLoader.ImageLoader;
 import com.nineone.verificationcode.ImageLoader.ImageScaleType;
+import com.nineone.verificationcode.ImageLoader.ProgressListener;
 import com.nineone.verificationcode.R;
 
 import java.io.File;
@@ -55,6 +57,7 @@ public class SixeActivity extends AppCompatActivity {
         });
 //        WebView webView;
 //        MultiTransformation
+<<<<<<< HEAD
 //        Glide.with(this).downloadOnly().load(new RequestListener<File>() {
 //            @Override
 //            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
@@ -116,6 +119,69 @@ public class SixeActivity extends AppCompatActivity {
 //                    }
 //
 //                });
+=======
+        Glide.with(this).downloadOnly().load(new RequestListener<File>() {
+            @Override
+            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                return false;
+            }
+        });
+        Glide.with(this).load("")
+                .placeholder(R.mipmap.loading)
+                .error(R.mipmap.loading)
+                .circleCrop()
+                .optionalCenterCrop()
+                .centerCrop()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onStop() {
+                        super.onStop();
+                    }
+
+                    @Override
+                    public void onLoadStarted(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Drawable> transition) {
+
+                    }
+
+                    @Override
+                    public void onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable Drawable errorDrawable) {
+                        super.onLoadFailed(errorDrawable);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+
+                    }
+
+                });
+>>>>>>> 52c3e85a521844ccf4d0be5480dac0982b1fec6e
         Context context = this;
 //        Glide.with(context)
 //                .load("myUrl")
@@ -123,6 +189,7 @@ public class SixeActivity extends AppCompatActivity {
 //                .fitCenter()
 //                .into(imageView);
 //        DoKitSPUtil
+<<<<<<< HEAD
 //        ImageLoader.load(context, R.string.app_name)
 //                .placeholder(R.mipmap.demo2)
 //                .round(15.f)
@@ -136,5 +203,47 @@ public class SixeActivity extends AppCompatActivity {
 //        ImageLoader.clear(context, new ImageView(this));
 //        ImageLoader.downLoad(context, "", "").down();
 //        HttpGlideUrlLoader httpGlideUrlLoader;
+=======
+        ImageLoader.load(context, "网络图片url")//根据不同业务需要使用不同方法例如下载 例如 加载gif 使用loadGif
+                .placeholder(R.mipmap.loading)//加载图片时到默认占位图
+                .round(15.f)//圆角dp
+                .error(R.mipmap.error)//加载失败时占位图
+                .scaleType(ImageScaleType.CENTER_INSIDE)//加载图片的展示方式
+                .diskCacheStrategy(ImageCacheType.AUTOMATIC)//加载图片的缓存方式
+                .into(new ImageView(context));//加载到具体图片显示控件上
+//                .into(new ImageView(this));
+
+        //取消Glide可能为视图加载的任何挂起的加载，并释放可能已为视图加载的任何资源。
+        ImageLoader.clear(context, new ImageView(this));
+        ImageLoader.downLoad(context, "图片url", "下载本地路径").listener(new ImageDownListener() {
+            //下载开始
+            @Override
+            public void onDownStarted(String url, String targetPath) {
+
+            }
+
+            //下载失败
+            @Override
+            public void onDownFailed(String url, String targetPath, String exceptionMessage) {
+
+            }
+
+            //下载成功
+            @Override
+            public void onDownSuccess(String url, String targetPath) {
+
+            }
+        }).progressListener(new ProgressListener() {
+            /**
+             * 下载进度监听
+             * @param progress 进度值0-100
+             */
+            @Override
+            public void onProgress(int progress) {
+
+            }
+        }).down();//开始下载
+        HttpGlideUrlLoader httpGlideUrlLoader;
+>>>>>>> 52c3e85a521844ccf4d0be5480dac0982b1fec6e
     }
 }

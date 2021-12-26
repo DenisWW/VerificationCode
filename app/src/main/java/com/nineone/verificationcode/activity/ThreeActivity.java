@@ -34,9 +34,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.nineone.verificationcode.MainActivity;
 import com.nineone.verificationcode.R;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class ThreeActivity extends Activity {
 
@@ -49,12 +47,12 @@ public class ThreeActivity extends Activity {
     private @IdRes
     static Integer[] idss = new Integer[]{
             R.mipmap.one,
-            R.mipmap.two,
+            R.mipmap.error,
             R.mipmap.three,
             R.mipmap.four,
             R.mipmap.five,
             R.mipmap.one,
-            R.mipmap.two,
+            R.mipmap.error,
             R.mipmap.three,
             R.mipmap.four,
             R.mipmap.five,

@@ -1,47 +1,24 @@
 package com.nineone.verificationcode;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.location.Criteria;
-import android.location.GnssNavigationMessage;
-import android.location.GnssStatus;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.AudioManager;
-import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaMuxer;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceError;
@@ -52,30 +29,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.CoreComponentFactory;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.SkuDetails;
-import com.bumptech.glide.Glide;
 import com.example.annotation.ActAnnotation;
 import com.nineone.verificationcode.activity.BesselActivity;
 import com.nineone.verificationcode.activity.MineActivity;
-import com.nineone.verificationcode.service.LocationService;
 import com.nineone.verificationcode.utils.Utils;
 import com.nineone.verificationcode.view.DragImageView;
 import com.nineone.verificationcode.view.ParentViewGroup;
@@ -85,12 +48,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,17 +57,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import io.microshow.rxffmpeg.RxFFmpegInvoke;
-import okhttp3.OkHttp;
-import retrofit2.http.GET;
-
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.media.MediaCodecList.REGULAR_CODECS;
-import static android.media.MediaFormat.KEY_BIT_RATE;
-import static android.media.MediaFormat.KEY_DURATION;
-import static android.media.MediaFormat.KEY_FRAME_RATE;
-import static android.media.MediaFormat.KEY_MAX_B_FRAMES;
-import static android.media.MediaFormat.KEY_MAX_INPUT_SIZE;
 
 @ActAnnotation(name = "TestMainActivity")
 public class MainActivity extends Activity {
@@ -151,7 +100,7 @@ public class MainActivity extends Activity {
         edit_view = findViewById(R.id.edit_view);
         final ImageView circle = findViewById(R.id.circle);
         seekBar.setMax(1000);
-        mine_iv.getBgImageView().setImageResource(R.mipmap.demo2);
+        mine_iv.getBgImageView().setImageResource(R.mipmap.loading);
 //       SurfaceView view_surface = findViewById(R.id.view_surface);
 //        view_surface.getHolder().addCallback(new SurfaceHolder.Callback() {
 //            @Override
@@ -176,7 +125,7 @@ public class MainActivity extends Activity {
 //        });
         Handler handler = new Handler();
 //        handler.sendEmptyMessage();
-        mine_iv.getProgressImageView().setImageResource(R.mipmap.demo2);
+        mine_iv.getProgressImageView().setImageResource(R.mipmap.loading);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

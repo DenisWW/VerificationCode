@@ -12,13 +12,8 @@ import com.bumptech.glide.Glide;
 public class ImageLoadFactory {
 
 
-    private ImageLoadFactory(Context context) {
-
-    }
-
     public static void clear(Context context, ImageView imageView) {
         Glide.with(context).clear(imageView);
-
     }
 
 }

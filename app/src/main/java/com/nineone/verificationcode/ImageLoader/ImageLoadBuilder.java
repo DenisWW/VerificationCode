@@ -31,18 +31,29 @@ public class ImageLoadBuilder {
 
     }
 
+    /**
+     * 加载图片到imageview
+     * @param imageView ：要显示到的imageView
+     */
     @SuppressLint("CheckResult")
     public void into(ImageView imageView) {
         if (options != null) request.apply(options.build());
         request.into(imageView);
     }
-
+    /**
+     * 预加载
+     */
     @SuppressLint("CheckResult")
     public void preload() {
         if (options != null) request.apply(options.build());
         request.preload();
     }
 
+    /**
+     * 指定宽高预加载
+     * @param width  宽度像素
+     * @param height  高度像素
+     */
     @SuppressLint("CheckResult")
     public void preload(int width, int height) {
         if (options != null) request.apply(options.build());
@@ -100,6 +111,9 @@ public class ImageLoadBuilder {
                 break;
             case FILE_TYPE:
                 manager.asFile();
+                break;
+            case DRAWABLE_TYPE:
+                manager.asDrawable();
                 break;
         }
         return this;

@@ -7,7 +7,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 
-public interface ILoadOption {
+ interface ILoadOption {
 
     /**
      * 加载图片时占位图片
@@ -19,7 +19,11 @@ public interface ILoadOption {
     /**
      * 加载图片的图像比例类型
      *
-     * @param scaleType 具体值为 @link ImageScaleType枚举
+     * @param scaleType 具体值为  ImageScaleType枚举
+     *                  FIT_CENTER      图像完全显示，但可能不会填满整个imageview
+     *                  CENTER_CROP     缩放图像填充满imageview并且裁剪额外的部分
+     *                  CENTER_INSIDE   缩放图像使图像的尺寸都等于或者小于视图，图片可能不会充满imageview
+     *                  CIRCLE_CROP     缩放图像充满imageview并且裁剪额外都部分，最终裁剪为圆形
      */
     void scaleType(ImageScaleType scaleType);
 
@@ -51,6 +55,11 @@ public interface ILoadOption {
      * 加载图片的缓存设置
      *
      * @param cacheType 具体值参考 ImageCacheType
+     *                  NONE          关闭硬盘缓存操作
+     *                  SOURCE        在资源解码后将数据写入磁盘缓存，即经过缩放等转换后的图片资源
+     *                  AUTOMATIC     根据原始图片数据和资源编码策略来自动选择磁盘缓存策略
+     *                  ALL           表示既缓存原始图片，也缓存转换过后的图片
+     *                  DATA          在资源解码前就将原始数据写入磁盘缓存
      */
     void cacheType(ImageCacheType cacheType);
 
