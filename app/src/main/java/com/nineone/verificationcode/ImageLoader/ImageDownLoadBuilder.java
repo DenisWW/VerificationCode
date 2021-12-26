@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.PreloadTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.nineone.verificationcode.R;
 
 import java.io.File;
 
@@ -32,6 +33,8 @@ public class ImageDownLoadBuilder {
         this.path = path;
         this.url = url;
         request = (manager = Glide.with(context)).downloadOnly().load(url);
+
+
     }
 
     public ImageDownLoadBuilder progressListener(ProgressListener progressListener) {

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
