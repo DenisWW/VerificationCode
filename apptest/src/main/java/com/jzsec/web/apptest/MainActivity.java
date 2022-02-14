@@ -1,33 +1,160 @@
 package com.jzsec.web.apptest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistry;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.jzsec.web.apptest.dialog.SimpleDialog;
-import com.jzsec.web.testa.MainActivityA;
-import com.jzsec.web.testb.MainActivityB;
+import com.jzsec.web.apptest.weight.SimpleDynamicLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements ViewModelStoreOwner, LifecycleOwner {
+    private final LifecycleRegistry lifecycle = new LifecycleRegistry(this);
+    private ViewModelStore viewModelStore;
+
+    public MainActivity() {
+        lifecycle.addObserver(new LifecycleEventObserver() {
+            @Override
+            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+                Log.e("onStateChanged", "====");
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+        UserViewModel userViewModel
+                = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getApplication()))
+                .get(UserViewModel.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
         findViewById(R.id.testa).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, MainActivityA.class));
                 new SimpleDialog(MainActivity.this).show();
             }
         });
         findViewById(R.id.testb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainActivityB.class));
+                userViewModel.getUserList();
+                Log.e("click", "=====");
             }
         });
+        SimpleDynamicLayout dynamicLayout = findViewById(R.id.group_divider);
+        TextView textView;
+        for (int i = 0; i < 10; i++) {
+            textView = new TextView(this);
+            textView.setText("Test   " + (i % 2 == 1 ? 10000000 : 10));
+            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            textView.setPadding(40, 20, 40, 20);
+            textView.setLayoutParams(layoutParams);
+            dynamicLayout.addView(textView);
+        }
+
+        userViewModel.getLiveData()
+                .observe(this, strings -> {
+                    for (String s : strings) {
+                        Log.e("s", "==" + s);
+                    }
+                });
+
+//        Condition condition=new Lock().newCondition();
+//        condition.await();
+//        condition.signal();
+//        ReentrantLock reentrantLock=new ReentrantLock();
+//        reentrantLock.newCondition();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_START);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+    }
+
+    @CallSuper
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        lifecycle.markState(Lifecycle.State.CREATED);
+        super.onSaveInstanceState(outState);
+    }
+
+    @NonNull
+    @Override
+    public ViewModelStore getViewModelStore() {
+        Log.e("getViewModelStore", "====");
+//        if (mViewModelStore == null) {
+//            NonConfigurationInstances nc =
+//                    (NonConfigurationInstances) getLastNonConfigurationInstance();
+//            if (nc != null) {
+//                // Restore the ViewModelStore from NonConfigurationInstances
+//                mViewModelStore = nc.viewModelStore;
+//            }
+//            if (mViewModelStore == null) {
+//                mViewModelStore = new ViewModelStore();
+//            }
+//        }
+
+        return viewModelStore == null ? new ViewModelStore() : viewModelStore;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        Log.e("onPointerCaptureChanged", "====" + hasCapture);
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        Log.e("getLifecycle", "====");
+        return lifecycle;
+    }
+
 }

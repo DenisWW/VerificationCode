@@ -98,6 +98,7 @@ class KotlinActivity : Activity() {
                 .collect {
                     image.setImageBitmap(it)
                 }
+            channelFlow<String> {  }.take(1).collect {  }
 
 
             (1..4).asFlow().flatMapMerge<Int, String> { flow<String> { emit("") } }

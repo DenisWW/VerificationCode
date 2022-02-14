@@ -14,7 +14,8 @@ import android.widget.FrameLayout;
 
 import androidx.core.view.ViewCompat;
 
-import com.gonlan.iplaymtg.R;
+
+import com.jzsec.web.apptest.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class SwipeBackLayout extends FrameLayout {
     public SwipeBackLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs);
         mDragHelper = ViewDragHelper.create(this,0.5F, new ViewDragCallback());
-        setShadow(R.drawable.shadow_left);
+//        setShadow(R.drawable.shadow_left);
         final float density = getResources().getDisplayMetrics().density;
         final float minVel = MIN_FLING_VELOCITY * density;
         setEdgeSize(getResources().getDisplayMetrics().widthPixels);

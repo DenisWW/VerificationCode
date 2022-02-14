@@ -6,21 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/simple_top_bar_layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/testa"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:background="#03A9F4"
+        android:gravity="center"
         android:text="testA"
+        android:textColor="@color/white"
+        android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+
     <TextView
         android:id="@+id/testb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="#8BC34A"
+        android:gravity="center"
         android:text="testB"
+        android:textColor="@color/white"
+        android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="100dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/testa" />
+
+    <com.jzsec.web.apptest.weight.SimpleDynamicLayout
+        android:id="@+id/group_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/testb" />
 </androidx.constraintlayout.widget.ConstraintLayout>

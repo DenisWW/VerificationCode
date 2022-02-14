@@ -61,7 +61,7 @@ class WebViewActivity : Activity() {
 ////            web_view.loadUrl("javascript:window.jzsec.postMessage('test')")
 //
 //        };
-        Glide.with(this).load(R.mipmap.demo2).transform(CenterCrop(),GranularRoundedCorners(30f,30f,30f,30f)).into(js_tv);
+        Glide.with(this).load(R.mipmap.three).transform(CenterCrop(),GranularRoundedCorners(30f,30f,30f,30f)).into(js_tv);
     }
 
     override fun onResume() {

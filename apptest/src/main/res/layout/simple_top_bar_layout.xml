@@ -4,13 +4,13 @@
     android:id="@+id/navigation_header_container"
     android:layout_width="match_parent"
     android:layout_height="48dp">
-<!--navigation-->
+    <!--navigation-->
     <TextView
         android:id="@+id/simple_left_tv"
         android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:text="left"
+        app:layout_constraintLeft_toRightOf="@+id/simple_left_iv" />
 
     <ImageView
         android:id="@+id/simple_left_iv"
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:src="@mipmap/test"
-        app:layout_constraintLeft_toRightOf="@+id/simple_left_tv" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/simple_title_tv"

@@ -30,6 +30,7 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
+            buildConfigField 'String', 'VERSION_NAME', "\"${defaultConfig.versionName}(${gitGitVersionName()}-${gitGitVersionCount()}-${gitGitVersionId()})\""
         }
     }
     sourceSets {
@@ -104,4 +105,19 @@ dependencies {
     implementation 'com.android.billingclient:billing:4.0.0'
     implementation 'com.qq.e.union:union:4.310.1180'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+    implementation 'com.drakeet.multitype:multitype:4.3.0'
+}
+
+//获取分支名称
+def gitGitVersionName() {
+    return 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+}
+//获取分支提交数量
+def gitGitVersionCount() {
+    return 'git rev-list --count HEAD'.execute().text.trim()
+}
+
+//获取分支id
+def gitGitVersionId() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
 }

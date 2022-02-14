@@ -6,7 +6,7 @@ class SPUtils {
         const val number = 1;
     }
 
-    public inner class A{
+    inner class A{
 
     }
 }

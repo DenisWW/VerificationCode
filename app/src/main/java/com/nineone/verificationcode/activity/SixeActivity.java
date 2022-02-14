@@ -57,7 +57,6 @@ public class SixeActivity extends AppCompatActivity {
         });
 //        WebView webView;
 //        MultiTransformation
-<<<<<<< HEAD
 //        Glide.with(this).downloadOnly().load(new RequestListener<File>() {
 //            @Override
 //            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
@@ -119,7 +118,6 @@ public class SixeActivity extends AppCompatActivity {
 //                    }
 //
 //                });
-=======
         Glide.with(this).downloadOnly().load(new RequestListener<File>() {
             @Override
             public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
@@ -181,7 +179,6 @@ public class SixeActivity extends AppCompatActivity {
                     }
 
                 });
->>>>>>> 52c3e85a521844ccf4d0be5480dac0982b1fec6e
         Context context = this;
 //        Glide.with(context)
 //                .load("myUrl")
@@ -189,7 +186,6 @@ public class SixeActivity extends AppCompatActivity {
 //                .fitCenter()
 //                .into(imageView);
 //        DoKitSPUtil
-<<<<<<< HEAD
 //        ImageLoader.load(context, R.string.app_name)
 //                .placeholder(R.mipmap.demo2)
 //                .round(15.f)
@@ -203,7 +199,6 @@ public class SixeActivity extends AppCompatActivity {
 //        ImageLoader.clear(context, new ImageView(this));
 //        ImageLoader.downLoad(context, "", "").down();
 //        HttpGlideUrlLoader httpGlideUrlLoader;
-=======
         ImageLoader.load(context, "网络图片url")//根据不同业务需要使用不同方法例如下载 例如 加载gif 使用loadGif
                 .placeholder(R.mipmap.loading)//加载图片时到默认占位图
                 .round(15.f)//圆角dp
@@ -244,6 +239,5 @@ public class SixeActivity extends AppCompatActivity {
             }
         }).down();//开始下载
         HttpGlideUrlLoader httpGlideUrlLoader;
->>>>>>> 52c3e85a521844ccf4d0be5480dac0982b1fec6e
     }
 }

@@ -10,7 +10,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,12 +28,11 @@ import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.jzsec.imageloader.ImageLoader;
-import com.jzsec.imageloader.listener.ImageDownListener;
 import com.jzsec.imageloader.listener.ImageLoadListener;
-import com.jzsec.imageloader.listener.ProgressListener;
 import com.jzsec.imageloader.option.ImageCacheType;
 import com.jzsec.imageloader.option.ImageLoadType;
 import com.jzsec.imageloader.option.ImageScaleType;
+import com.nineone.verificationcode.BuildConfig;
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.bean.UserBean;
 import com.nineone.verificationcode.utils.TestFlow;
@@ -178,6 +176,9 @@ public class ImageActivity extends Activity {
 
 //        Observable.sequenceEqual()// 用于判断两个Observable发射的数据是否相同（数据，发射顺序，终止状态）。
 //        Observable.interval()//创建一个按照给定的时间间隔发射从0开始的整数序列的Observable<Long>，内部通过OnSubscribeTimerPeriodically工作。
+
+
+//        new ViewHolderBinderPool().addViewHolder(R.layout.activity_image,String.class);
     }
 
     private void initCombineLatest() {
@@ -213,11 +214,11 @@ public class ImageActivity extends Activity {
 
             }
         });
-    }
+       }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void saveLocalPath(File file) {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator;
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator;
         Log.e("path", "====" + path + "      " + path.endsWith(File.separator));
         File saveFileParent = new File(path);
         path += (File.separator + "wwww111.png");
