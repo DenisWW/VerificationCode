@@ -87,10 +87,10 @@ class KotlinActivity : Activity() {
                 emit(BitmapFactory.decodeResource(resources, R.mipmap.placeholder))
             }
                 .flowOn(Dispatchers.IO)
-                .onStart {  }
-                .onCompletion {  }
-                .onEach {  }
-                .onEach {  }
+                .onStart { }
+                .onCompletion { }
+                .onEach { }
+                .onEach { }
                 .take(1)
                 .drop(1)
                 .buffer()
@@ -98,12 +98,12 @@ class KotlinActivity : Activity() {
                 .collect {
                     image.setImageBitmap(it)
                 }
-            channelFlow<String> {  }.take(1).collect {  }
+            channelFlow<String> { }.take(1).collect { }
 
 
             (1..4).asFlow().flatMapMerge<Int, String> { flow<String> { emit("") } }
-            flowOf((1..4).asFlow(), (2..4).asFlow()).zip(flow<String> { }){s1,s2->}
-                .combine(flow <String>{  }){s,b->}.collect {  }
+            flowOf((1..4).asFlow(), (2..4).asFlow()).zip(flow<String> { }) { s1, s2 -> }
+                .combine(flow<String> { }) { s, b -> }.collect { }
         }
 
 
@@ -188,6 +188,13 @@ class KotlinActivity : Activity() {
 
     }
 
+
+    fun text(string: suspend () -> String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            var s: String = string()
+            Log.e("text", "=====$s");
+        }
+    }
 }
 
 typealias UserCall = (SimpleData) -> Unit

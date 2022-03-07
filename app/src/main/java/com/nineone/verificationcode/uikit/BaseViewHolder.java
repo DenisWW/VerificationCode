@@ -1,13 +1,26 @@
 package com.nineone.verificationcode.uikit;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseViewHolder<B> extends RecyclerView.ViewHolder {
-    public BaseViewHolder(@NonNull View itemView) {
-        super(itemView);
+
+    protected BaseViewHolder(View view) {
+        super(view);
+        initView();
+    }
+
+    protected BaseViewHolder(@LayoutRes int layoutResId, ViewGroup viewGroup) {
+        super(LayoutInflater.from(viewGroup.getContext()).inflate(layoutResId, null));
+        initView();
+    }
+
+    protected BaseViewHolder(@LayoutRes int layoutResId, ViewGroup viewGroup, boolean attachToRoot) {
+        super(LayoutInflater.from(viewGroup.getContext()).inflate(layoutResId, viewGroup, attachToRoot));
         initView();
     }
 
@@ -27,6 +40,6 @@ public abstract class BaseViewHolder<B> extends RecyclerView.ViewHolder {
             parseBeanError(e.getMessage());
             e.printStackTrace();
         }
-
     }
+
 }

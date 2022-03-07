@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class SimpleDialog extends Dialog {
     }
 
     private void initView() {
+        EditText simple_content = findViewById(R.id.simple_content);
         TextView left_tv = findViewById(R.id.simple_left_tv);
         left_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,9 @@ public class SimpleDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
+                if (onTextListener != null) {
+                    onTextListener.onText(simple_content.getText().toString());
+                }
             }
         });
     }
@@ -67,9 +72,18 @@ public class SimpleDialog extends Dialog {
 //        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         window.setAttributes(layoutParams);
-        window.setBackgroundDrawableResource(R.color.tans);
 //        window.setBackgroundDrawable(new BitmapDrawable());
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(true);
+    }
+
+    private OnTextListener onTextListener;
+
+    public void setOnTextListener(OnTextListener onTextListener) {
+        this.onTextListener = onTextListener;
+    }
+
+    public interface OnTextListener {
+        void onText(String s);
     }
 }

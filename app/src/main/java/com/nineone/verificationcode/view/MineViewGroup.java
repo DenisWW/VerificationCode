@@ -143,7 +143,7 @@ public class MineViewGroup extends RelativeLayout implements ViewPager.OnPageCha
                 if (bottomViewBuilder != null && bottomViewBuilder.width == 0) {
                     bottomRl.leftMargin = (int) (tvNow.getLeft() + bottomViewBuilder.leftMargin + (tvNext.getLeft() - tvNow.getLeft()) * positionOffset);
                     bottomRl.width = (int) (((tvNext.getWidth() - bottomViewBuilder.leftMargin - bottomViewBuilder.rightMargin) - ((tvNow.getWidth() - bottomViewBuilder.leftMargin - bottomViewBuilder.rightMargin))) * positionOffset
-                                                + ((tvNow.getWidth() - bottomViewBuilder.leftMargin - bottomViewBuilder.rightMargin)));
+                            + ((tvNow.getWidth() - bottomViewBuilder.leftMargin - bottomViewBuilder.rightMargin)));
                     if (!isFirst) {
                         isFirst = true;
                         view.setLayoutParams(bottomRl);
@@ -215,6 +215,7 @@ public class MineViewGroup extends RelativeLayout implements ViewPager.OnPageCha
     }
 
     private void setBottomView() {
+        if (bottomRl == null || bottomViewBuilder == null) return;
         bottomRl.width = bottomViewBuilder.width > 0 ? bottomViewBuilder.width : bottomRl.width;
         bottomRl.height = bottomViewBuilder.height > 0 ? bottomViewBuilder.height : bottomRl.height;
         bottomRl.leftMargin = bottomViewBuilder.leftMargin;

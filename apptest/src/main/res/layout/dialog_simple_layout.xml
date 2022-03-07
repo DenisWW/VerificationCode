@@ -22,14 +22,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="标题" />
+            android:text="" />
 
-        <TextView
+        <EditText
             android:id="@+id/simple_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/simple_title"
             android:layout_marginTop="15dp"
+            android:hint="输入内容"
             android:textSize="16dp" />
 
         <LinearLayout

@@ -135,66 +135,6 @@ public class FiveActivity extends FragmentActivity {
             Intent intent1 = new Intent(this, ThreeActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent1);
-//            animationDrawable.start();
-//            Log.e("         =========" + this.getClass().getName(), "     onCreate==" + iv.getBackground());
-//                controller.addBookInOut(new Book("就是测试一下"));
-
-//            new Thread() {
-//                @RequiresApi(api = Build.VERSION_CODES.O)
-//                @Override
-//                public void run() {
-//                    super.run();
-//                    ZipInputStream zis = null;
-//                    try {
-//                        zis = new ZipInputStream(getAssets().open("1.zip"));
-//                        ZipEntry entry;
-//                        Log.e("getContent", "===" + getBaseContext().getFilesDir() + zis.available());
-//                        File file = new File(getBaseContext().getFilesDir().getParentFile(), "1");
-//                        if (!file.exists()) file.mkdirs();
-//                        while (((entry = zis.getNextEntry()) != null)) {
-//                            Log.e("entry", "===" + entry.getName() + "    " + zis.available()
-//                                    + "   " + entry.getCompressedSize()
-//                                    + "    " + entry.getSize()
-//                            );
-//                            File f = new File(file, entry.getName());
-//                            if (!f.getParentFile().exists()) f.getParentFile().mkdirs();
-//                            if (!f.exists()) f.createNewFile();
-//                            FileOutputStream fos = new FileOutputStream(f);
-//                            int i = 0;
-//                            int total = 0;
-//                            byte[] bytes = new byte[1024];
-//                            try {
-//                                while ((i = zis.read(bytes)) > 0) {
-//                                    total += i;
-//                                    Log.e("zis", entry.getName()+"====" + i+"  "+total);
-//                                    fos.write(bytes, 0, i);
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                                Log.e("Exception", "====" + i+"   "+total);
-////                                zis.skip(entry.getSize() -total);
-////                                zis.close();
-////                                zis.reset();
-////                                zis.mark();
-//
-//                            } finally {
-//                                fos.flush();
-//                                fos.close();
-//                            }
-//
-//                        }
-//                        try {
-//                            zis.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    } finally {
-//
-//                    }
-//                }
-//            }.start();
         });
 
     }

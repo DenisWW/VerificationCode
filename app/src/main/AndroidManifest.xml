@@ -39,10 +39,10 @@
             android:name=".activity.AdapterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".activity.ImageActivity">
 
@@ -72,7 +72,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.MineActivity" />
+        <activity android:name=".activity.MineActivity" >
+
+        </activity>
         <activity android:name=".activity.FourActivity" />
         <activity
             android:name=".activity.ThreeActivity"

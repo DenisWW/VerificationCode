@@ -4,12 +4,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.uikit.BaseViewHolder;
 
 public class WViewHolder1 extends BaseViewHolder<Integer> {
@@ -19,8 +21,8 @@ public class WViewHolder1 extends BaseViewHolder<Integer> {
     private LinearLayout layout;
     private Integer bean;
 
-    public WViewHolder1(@NonNull View itemView) {
-        super(itemView);
+    public WViewHolder1(@NonNull ViewGroup itemView) {
+        super(R.layout.item_right_layout,itemView,false);
     }
 
     @Override

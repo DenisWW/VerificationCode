@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.fragment.TestFragment;
+import com.nineone.verificationcode.fragment.TestFragment1;
 import com.nineone.verificationcode.view.MineViewGroup;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class MineActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine);
         init();
+//        SharedPreferences sharedPreferences=getSharedPreferences(, Context.MODE_MULTI_PROCESS)
     }
 
     private class MyHandler extends Handler {
@@ -73,7 +77,7 @@ public class MineActivity extends FragmentActivity {
 
     }
 
-    public  class Adapter extends FragmentPagerAdapter {
+    public static class Adapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments;
         private List<String> names;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="din_pf">
+        <item name="android:fontFamily">@font/pf</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="din_regular">
+        <item name="android:fontFamily">@font/din_regular</item>
+    </style>
+
+    <style name="din_medium">
+        <item name="android:fontFamily">@font/din_medium</item>
+    </style>
+
+    <style name="din_bold">
+        <item name="android:fontFamily">@font/din_bold</item>
+    </style>
+</resources>

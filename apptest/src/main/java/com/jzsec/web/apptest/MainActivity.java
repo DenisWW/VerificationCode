@@ -2,6 +2,7 @@ package com.jzsec.web.apptest;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -21,6 +23,9 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.jzsec.web.apptest.dialog.SimpleDialog;
 import com.jzsec.web.apptest.weight.SimpleDynamicLayout;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends Activity implements ViewModelStoreOwner, LifecycleOwner {
     private final LifecycleRegistry lifecycle = new LifecycleRegistry(this);
@@ -87,6 +92,38 @@ public class MainActivity extends Activity implements ViewModelStoreOwner, Lifec
 //        condition.signal();
 //        ReentrantLock reentrantLock=new ReentrantLock();
 //        reentrantLock.newCondition();
+
+
+        new Thread() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void run() {
+                super.run();
+//                PdfRenderer pdfRenderer= null;
+//                try {
+//                    pdfRenderer = new PdfRenderer(new File(""));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                pdfRenderer.openPage(0);
+                try {
+                    for (int i = 0; i < 100; i++) {
+                        if (i == 50) {
+                            throw new IOException("就是想抛出异常");
+                        }
+                        Log.e("Thread", "====" + i);
+                        if (this.isInterrupted()) {
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    this.interrupt();
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
     }
 
     @Override

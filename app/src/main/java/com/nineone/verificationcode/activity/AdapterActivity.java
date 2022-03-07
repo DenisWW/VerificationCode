@@ -1,31 +1,34 @@
 package com.nineone.verificationcode.activity;
 
-import androidx.annotation.NonNull;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import com.google.gson.Gson;
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.adapter.LeftViewHolder;
 import com.nineone.verificationcode.adapter.WViewHolder;
 import com.nineone.verificationcode.adapter.WViewHolder1;
+import com.nineone.verificationcode.bean.Book;
+import com.nineone.verificationcode.bean.UserBean;
 import com.nineone.verificationcode.uikit.MultiTypeAdapter;
 import com.nineone.verificationcode.uikit.ViewHolderBinderPool;
-import com.nineone.verificationcode.uikit.ViewHolderCreateHelper;
+import com.nineone.verificationcode.utils.CenterAlignImageSpan;
 import com.nineone.verificationcode.view.LeftRecyclerView;
 import com.nineone.verificationcode.view.RightRecycleView;
 import com.nineone.verificationcode.view.ScrollerTableLayout;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class AdapterActivity extends AppCompatActivity {
     private RightRecycleView rightRecyclerView;
 
     private ScrollerTableLayout scrollerTableLayout;
+    private TextView textView;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -55,29 +59,12 @@ public class AdapterActivity extends AppCompatActivity {
         List<Object> leftList = new ArrayList<>();
         List<Object> rightList = new ArrayList<>();
         rightRecyclerView.setAdapter(rightAdapter = new MultiTypeAdapter(new ViewHolderBinderPool()
-                .addViewHolderCreateHelper(String.class, new ViewHolderCreateHelper<WViewHolder, String>() {
-                    @Override
-                    public WViewHolder createViewHolder(ViewGroup parent) {
-                        return new WViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_right_layout, null));
-                    }
-                })
-                .addViewHolderCreateHelper(Integer.class, new ViewHolderCreateHelper<WViewHolder1, Integer>() {
-                    @Override
-                    public WViewHolder1 createViewHolder(ViewGroup parent) {
-                        return new WViewHolder1(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_right_layout, null));
-                    }
-                })
-                , rightList));
+                .addViewHolderCreateHelper(String.class, WViewHolder::new)
+                .addViewHolderCreateHelper(Integer.class, WViewHolder1::new), rightList));
 
         leftRecyclerView.setAdapter(leftAdapter
                 = new MultiTypeAdapter(new ViewHolderBinderPool()
-                .addViewHolderCreateHelper(String.class, new ViewHolderCreateHelper<LeftViewHolder, String>() {
-                    @Override
-                    public LeftViewHolder createViewHolder(ViewGroup viewGroup) {
-                        return new LeftViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_left_layout, viewGroup, false));
-                    }
-                })
-                , leftList));
+                .addViewHolderCreateHelper(String.class, LeftViewHolder::new), leftList));
 
         List<Object> right = new ArrayList<>();
         List<Object> left = new ArrayList<>();
@@ -100,9 +87,40 @@ public class AdapterActivity extends AppCompatActivity {
         findViewById(R.id.top_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    Object object = UserBean.class.newInstance();
+                    Field f = UserBean.class.getDeclaredField("data");
+                    Type genericType = f.getGenericType();
+                    ParameterizedType parameterizedType = (ParameterizedType) genericType;
+                    Class<?> c = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+                    Object o = c.newInstance();
+                    Field field = c.getDeclaredField("serialPersistentFields");
+                    field.setAccessible(true);
+                    field.set(o, 12);
+                    Log.e("Field", genericType + "====" + parameterizedType.getActualTypeArguments()[0] + "   == " + o.getClass()
+                            + "   " + o
+                    );
+                    for (Field f2 : c.getDeclaredFields()) {
+                        Log.e("f2===", "====" + f2);
+                    }
+                } catch (IllegalAccessException | InstantiationException | NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+
 //                clearData(leftAdapter, list);
             }
         });
+
+        textView = findViewById(R.id.top_bt);
+        SpannableStringBuilder spannable = new SpannableStringBuilder(" 沪a萨达啥今天亏打发了是啊哈哈哈哈");
+        // 设置边框
+//        spannable.setSpan(new DrawableMarginSpan( getResources().getDrawable(R.drawable.stroke_eb4a38_1)), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new CenterAlignImageSpan(this, R.mipmap.label_ke), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textView.setText(spannable);
+
+        String json = "{\"name\":null}";
+        Book book = new Gson().fromJson(json, Book.class);
+        Log.e("book", "====" + book.name);
     }
 
     public void addData(RecyclerView.Adapter<?> adapter, List<Object> list, List<?> res) {

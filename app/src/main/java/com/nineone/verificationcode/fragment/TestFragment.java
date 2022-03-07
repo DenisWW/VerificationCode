@@ -1,6 +1,7 @@
 package com.nineone.verificationcode.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.nineone.verificationcode.R;
+import com.nineone.verificationcode.activity.MineActivity;
+import com.nineone.verificationcode.view.MineViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestFragment extends Fragment {
     private int position;
-    private RecyclerView recyclerView;
     private List<String> list;
 
     @Nullable
@@ -29,9 +32,30 @@ public class TestFragment extends Fragment {
         position = getArguments().getInt("position", 0);
         TextView test_tv = view.findViewById(R.id.test_tv);
         test_tv.setText(String.valueOf(position));
+        ViewPager vp = view.findViewById(R.id.vp);
+        MineViewGroup mineViewGroup = view.findViewById(R.id.mine_vg);
+        MineActivity.Adapter adapter = new MineActivity.Adapter(getChildFragmentManager());
+        vp.setAdapter(adapter);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        initRecyclerView(recyclerView);
+        List<Fragment> fragments = new ArrayList<>();
+        List<String> names = new ArrayList<>();
+        Bundle bundle;
+        for (int i = 0; i < 5; i++) {
+            bundle = new Bundle();
+            bundle.putInt("position", i);
+            TestFragment1 fragment = new TestFragment1();
+            fragment.setArguments(bundle);
+            names.add("标题" + i);
+            fragments.add(fragment);
+
+        }
+        Log.e("fragments", "===" + fragments);
+        Log.e("names", "===" + names);
+
+        adapter.setFragments(fragments, names);
+        vp.setCurrentItem(0);
+//        mine_vg.buildBottomView(new MineViewGroup.BottomViewBuilder().setLeftMargin(10).setRightMargin(5).build());
+        mineViewGroup.attachViewPager(vp);
         return view;
     }
 
