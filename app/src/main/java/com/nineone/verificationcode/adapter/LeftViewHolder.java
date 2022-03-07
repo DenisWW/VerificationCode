@@ -3,6 +3,7 @@ package com.nineone.verificationcode.adapter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +18,8 @@ public class LeftViewHolder extends BaseViewHolder<String> {
     private TextView textView;
     private String bean;
 
-    public LeftViewHolder(@NonNull View itemView) {
-        super(itemView);
+    public LeftViewHolder(@NonNull ViewGroup itemView) {
+        super(R.layout.item_left_layout, itemView,false);
 
     }
 

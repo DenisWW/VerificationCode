@@ -67,7 +67,6 @@ public class SimpleDialog extends Dialog {
 //        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         window.setAttributes(layoutParams);
-        window.setBackgroundDrawableResource(R.color.tans);
 //        window.setBackgroundDrawable(new BitmapDrawable());
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(true);

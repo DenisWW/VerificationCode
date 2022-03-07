@@ -43,4 +43,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/testb" />
+
+    <com.jzsec.web.apptest.weight.ChartView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/shv" />
+
+    <com.jzsec.web.apptest.weight.SimpleHistogramView
+        android:id="@+id/shv"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@+id/group_divider" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,9 @@
         <entry key="app/src/main/res/layout/scroller_table_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/simple_fragment_layout.xml" value="0.19067028985507245" />
         <entry key="apptest/src/main/res/drawable/dialog_bg.xml" value="0.12447916666666667" />
-        <entry key="apptest/src/main/res/layout/activity_main.xml" value="0.1838768115942029" />
+        <entry key="apptest/src/main/res/layout/activity_main(1).xml" value="0.23052536231884058" />
+        <entry key="apptest/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="apptest/src/main/res/layout/activity_main1.xml" value="0.19701086956521738" />
         <entry key="apptest/src/main/res/layout/dialog_simple_layout.xml" value="0.19067028985507245" />
         <entry key="apptest/src/main/res/layout/simple_top_bar_layout.xml" value="0.1" />
       </map>

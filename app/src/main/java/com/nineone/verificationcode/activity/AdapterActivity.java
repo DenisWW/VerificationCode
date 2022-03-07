@@ -55,29 +55,12 @@ public class AdapterActivity extends AppCompatActivity {
         List<Object> leftList = new ArrayList<>();
         List<Object> rightList = new ArrayList<>();
         rightRecyclerView.setAdapter(rightAdapter = new MultiTypeAdapter(new ViewHolderBinderPool()
-                .addViewHolderCreateHelper(String.class, new ViewHolderCreateHelper<WViewHolder, String>() {
-                    @Override
-                    public WViewHolder createViewHolder(ViewGroup parent) {
-                        return new WViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_right_layout, null));
-                    }
-                })
-                .addViewHolderCreateHelper(Integer.class, new ViewHolderCreateHelper<WViewHolder1, Integer>() {
-                    @Override
-                    public WViewHolder1 createViewHolder(ViewGroup parent) {
-                        return new WViewHolder1(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_right_layout, null));
-                    }
-                })
-                , rightList));
+                .addViewHolderCreateHelper(String.class, WViewHolder::new)
+                .addViewHolderCreateHelper(Integer.class, WViewHolder1::new), rightList));
 
         leftRecyclerView.setAdapter(leftAdapter
                 = new MultiTypeAdapter(new ViewHolderBinderPool()
-                .addViewHolderCreateHelper(String.class, new ViewHolderCreateHelper<LeftViewHolder, String>() {
-                    @Override
-                    public LeftViewHolder createViewHolder(ViewGroup viewGroup) {
-                        return new LeftViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_left_layout, viewGroup, false));
-                    }
-                })
-                , leftList));
+                .addViewHolderCreateHelper(String.class, LeftViewHolder::new), leftList));
 
         List<Object> right = new ArrayList<>();
         List<Object> left = new ArrayList<>();
