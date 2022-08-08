@@ -24,10 +24,10 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
 
     @Override
     public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
-        Log.e(this + "", "   layoutDependsOn===" + child
-                + "     MeasuredHeight=" + dependency.getMeasuredHeight()
-                + "     height=" + dependency.getHeight()
-        );
+//        Log.e(this + "", "   layoutDependsOn===" + child
+//                + "     MeasuredHeight=" + dependency.getMeasuredHeight()
+//                + "     height=" + dependency.getHeight()
+//        );
         return dependency instanceof LinearLayout;
     }
 
@@ -36,7 +36,7 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
 
     @Override
     public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
-        Log.e(this + "", "   onDependentViewChanged===" + child + "      " + dependency);
+//        Log.e(this + "", "   onDependentViewChanged===" + child + "      " + dependency);
         child.offsetTopAndBottom(totalTop = dependency.getHeight());
         return super.onDependentViewChanged(parent, child, dependency);
     }
@@ -45,7 +45,7 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
     public void onNestedScrollAccepted(
             @NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target,
             int axes, int type) {
-        Log.e(this + "", "   onNestedScrollAccepted===" + child + "   " + target);
+//        Log.e(this + "", "   onNestedScrollAccepted===" + child + "   " + target);
         super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, axes, type);
 
     }
@@ -54,8 +54,8 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
     public boolean onStartNestedScroll(
             @NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target,
             int axes, int type) {
-        Log.e(this + " ", "   onStartNestedScroll===" + coordinatorLayout.getChildAt(0).getClass().getSimpleName()
-                + "    " + target.getClass().getSimpleName() + "   " + directTargetChild.getClass().getSimpleName()+"   "+type);
+//        Log.e(this + " ", "   onStartNestedScroll===" + coordinatorLayout.getChildAt(0).getClass().getSimpleName()
+//                + "    " + target.getClass().getSimpleName() + "   " + directTargetChild.getClass().getSimpleName()+"   "+type);
 //        if (axes == ViewCompat.SCROLL_AXIS_VERTICAL) {
 //            return true;
 //        }
@@ -65,7 +65,7 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target,
                                int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type, @NonNull int[] consumed) {
-        Log.e(this + "", "   onNestedScroll===" + "   " + "   dyConsumed=" + dyConsumed + "   dyUnconsumed= " + dyUnconsumed);
+//        Log.e(this + "", "   onNestedScroll===" + "   " + "   dyConsumed=" + dyConsumed + "   dyUnconsumed= " + dyUnconsumed);
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed);
     }
 
@@ -87,7 +87,7 @@ public class MineBehavior extends CoordinatorLayout.Behavior<View> {
             }
             ViewCompat.offsetTopAndBottom(child, -consumed[1]);
 //            child.offsetTopAndBottom(-consumed[1]);
-            Log.e(this + "", "   onNestedPreScroll2===" + child.getTop() + "   dy=" + dy + "     " + consumed[1]);
+//            Log.e(this + "", "   onNestedPreScroll2===" + child.getTop() + "   dy=" + dy + "     " + consumed[1]);
         }
 
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);

@@ -22,6 +22,10 @@
         tools:ignore="MockLocation,ProtectedPermissions"
         tools:node="replace" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 使用 OpenGL3.0 -->
+    <uses-feature
+        android:glEsVersion="0x00030000"
+        android:required="true" />
 
     <application
         android:name=".base.MyApplication"
@@ -35,21 +39,28 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme"
         tools:targetApi="m">
+
         <activity
-            android:name=".activity.AdapterActivity">
+            android:name=".activity.OpenGlActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name=".activity.ImageActivity">
-
         </activity>
         <activity
+            android:name=".activity.DCBKActivity"
+            android:exported="false"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".activity.DCStockDetailActivity"
+            android:exported="false"></activity>
+        <activity android:name=".activity.AdapterActivity" />
+        <activity android:name=".activity.ImageActivity" />
+        <activity
             android:name=".activity.WebViewActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name=".activity.SixeActivity" />
 
         <service
@@ -72,9 +83,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.MineActivity" >
-
-        </activity>
+        <activity android:name=".activity.MineActivity" />
         <activity android:name=".activity.FourActivity" />
         <activity
             android:name=".activity.ThreeActivity"
@@ -86,7 +95,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.BesselActivity" />
+        <activity android:name=".activity.BesselActivity">
+
+        </activity>
         <activity android:name=".activity.MainActivity" />
 
         <provider

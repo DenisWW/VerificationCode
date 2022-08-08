@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.BesselActivity">
+
     <ImageView
         android:id="@+id/login_bg"
         android:layout_width="match_parent"
@@ -23,5 +24,138 @@
         android:layout_marginTop="100dp"
         android:scaleType="fitXY"
         android:src="@mipmap/login_top_icon" />
+
+    <com.nineone.verificationcode.view.SimpleShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_top_icon"
+        android:background="@color/white"
+        android:padding="12dp"
+        app:shadow_alpha="0.1"
+        app:shadow_radius_dp="8dp"
+        app:shadow_round_corner_dp="10dp">
+
+        <!--        <com.nineone.verificationcode.view.SimpleShadowLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/login_top_icon"-->
+        <!--            android:layout_margin="12dp"-->
+        <!--            app:shadow_dp="12dp">-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="12312312312312312" />
+        <!--        </com.nineone.verificationcode.view.SimpleShadowLayout>-->
+    </com.nineone.verificationcode.view.SimpleShadowLayout>
+
+
+    <com.nineone.verificationcode.view.SimpleView
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:layout_below="@+id/login_top_icon" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_bg"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.nineone.verificationcode.view.AutoTextView
+                android:id="@+id/auto_text_view"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_4F22FF"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:autoMinTextSize="12sp" />
+
+            <TextView
+                android:id="@+id/dc_go"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="东财跳转"
+
+                android:textColor="@color/color_4F22FF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/ths_go"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="同花顺跳转"
+                android:textColor="@color/color_4F22FF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/dc_go2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizeMinTextSize="@dimen/dk_dp_4"
+                android:background="@color/color_4F22FF"
+                android:includeFontPadding="false"
+                android:text="同"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/dc_go3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_4F22FF"
+                android:text="同"
+                android:textColor="@color/white" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/one_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+                <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/line_view"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="142dp" />
+
+                <TextView
+                    android:id="@+id/two_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="哈哈哈哈aa"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toRightOf="@+id/one_tv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

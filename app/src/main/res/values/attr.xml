@@ -3,4 +3,14 @@
     <declare-styleable name="ParentViewGroup">
         <attr name="targetViewId" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="AutoTextView">
+        <attr name="autoMinTextSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="SimpleShadowLayout">
+        <attr name="shadow_radius_dp" format="dimension" /> <!-- 设置阴影半径-->
+        <attr name="shadow_round_color" format="color" /> <!-- 设置阴影颜色-->
+        <attr name="shadow_round_corner_dp" format="dimension" /> <!-- 设置阴影圆角-->
+        <attr name="shadow_alpha" format="float" /> <!-- 设置阴影透明度-->
+    </declare-styleable>
 </resources>

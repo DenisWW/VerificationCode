@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.DCBKActivity">
+
+    <TextView
+        android:id="@+id/stock_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeTextType="uniform"
+        android:background="@color/dk_color_F5F6F7"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:text="板块详情"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/go_bk_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/dk_color_E5E5E5"
+        android:gravity="center"
+        android:minHeight="40dp"
+        android:text="跳转汽车板块详情"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/go_stock_df_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/dk_color_E5E5E5"
+        android:gravity="center"
+        android:minHeight="40dp"
+        android:text="跳转东风汽车个股详情页面"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/go_stock_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/dk_color_E5E5E5"
+        android:gravity="center"
+        android:minHeight="40dp"
+        android:includeFontPadding="false"
+        android:text="跳转比亚迪个股详情页面"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</LinearLayout>

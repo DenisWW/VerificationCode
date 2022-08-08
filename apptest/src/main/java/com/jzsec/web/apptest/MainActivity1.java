@@ -126,6 +126,18 @@ public class MainActivity1 extends AppCompatActivity {
                 rightIvY = -(rightIv.getY() + rightIv.getHeight() / 2f - parentRlay.getHeight() / 2f);
             }
         });
+        carIv.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                Log.e("onViewAttachedToWindow", "===="+v);
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                Log.e("onViewDetachedFrom", "===="+v);
+            }
+        });
 
     }
 }

@@ -121,6 +121,7 @@ public class AdapterActivity extends AppCompatActivity {
         String json = "{\"name\":null}";
         Book book = new Gson().fromJson(json, Book.class);
         Log.e("book", "====" + book.name);
+
     }
 
     public void addData(RecyclerView.Adapter<?> adapter, List<Object> list, List<?> res) {

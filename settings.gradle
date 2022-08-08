@@ -1,6 +1,7 @@
 include ':processor-compiler'
 include ':annotation'
 include ':groovyLib'
+includeBuild 'versionlibrary'
 rootProject.name='VerificationCode'
 include ':app'
 include ':testa'
@@ -8,3 +9,4 @@ include ':testb'
 include ':testC'
 include ':TestD'
 include ':apptest'
+

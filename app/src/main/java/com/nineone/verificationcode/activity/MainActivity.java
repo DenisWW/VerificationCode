@@ -273,6 +273,9 @@ public class MainActivity extends Activity {
 //        videoView.setVideoPath("https://wsmedia.iyingdi.cn/video/2020/08/10/504fca6f-c079-4027-aacf-d5defeae859a.mp4");
 //        videoView.start();
     }
+    static {
+        System.loadLibrary("native-lib");
+    }
 
     public native String stringFromJNI();
 

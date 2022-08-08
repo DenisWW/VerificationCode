@@ -33,8 +33,8 @@ public class CenterAlignImageSpan extends ImageSpan {
     }
 
     @Override
-    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom,
-                     @NonNull Paint paint) {
+    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x,
+                     int top, int y, int bottom, @NonNull Paint paint) {
 //        Paint.FontMetricsInt metricsInt = paint.getFontMetricsInt();
 //        top = 0;
 //        bottom = metricsInt.bottom - metricsInt.top;
@@ -45,18 +45,19 @@ public class CenterAlignImageSpan extends ImageSpan {
         Drawable b = getDrawable();
         Paint.FontMetricsInt fm = paint.getFontMetricsInt();
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
-//        int transY = (y + fm.descent + y + fm.ascent) / 2 - b.getBounds().bottom / 2;
-//        int transY = (bottom - (fm.descent - fm.ascent)) / 2 + (bottom - b.getBounds().bottom) / 2;
-//        int transY = y + fm.ascent + ((fm.descent - fm.ascent) - b.getBounds().bottom) / 2;
-        int transY = y + fm.ascent + ((fm.descent - fm.ascent) - b.getBounds().bottom) / 2;
-
-        Log.e("draw", "===="
+//        float transY = (y + fm.descent + y + fm.ascent) / 2 - b.getBounds().bottom / 2;
+//        float transY = (bottom - (fm.descent - fm.ascent)) / 2 + (bottom - b.getBounds().bottom) / 2;
+//        float transY = y + fm.ascent + ((fm.bottom - fm.ascent) - b.getBounds().bottom) / 2F;
+//        float transY =  (bottom - ((fm.bottom - fm.ascent) - b.getBounds().height()) / 2F - b.getBounds().height());
+        float transY = top + (bottom - top - b.getBounds().height()) / 2F + (fm.bottom - fm.top - fm.descent + fm.ascent) / 2F;
+//        float transY = bottom - (bottom - y) / 2F - b.getBounds().height();
+        Log.e("draw", "====" + b.getBounds().height()
                 + "   transY== " + transY
-                + "   y == " + y
-                + "   fm.ascent  == " + (fm.ascent)
-                + "   fm.descent  == " + (fm.descent)
-                + "   bottom == " + bottom
-                + "   bottom2 == " + b.getBounds().bottom
+                + "   y== " + y
+                + "   fm==" + (fm.descent - fm.ascent)
+                + "   fm.d==" + (fm.bottom - fm.top)
+                + "   top==" + top
+                + "   bottom==" + bottom
         );
 //        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.stroke_eb4a38_1, null);
 //        drawable.setBounds(new Rect((int) paint.measureText(text.toString()), 0, fm.bottom - fm.top + (int) paint.measureText(text.toString()), fm.bottom - fm.top));

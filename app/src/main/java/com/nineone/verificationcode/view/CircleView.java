@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
@@ -50,6 +51,8 @@ public class CircleView extends androidx.appcompat.widget.AppCompatImageView {
 //        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         paint.setXfermode(null);
         canvas.restoreToCount(layerID);
+//        ViewGroup viewGroup;
+//        viewGroup.setMeasureDimension();
     }
 
 //    android.graphics.PorterDuff.Mode.SRC      : 只绘制源图像

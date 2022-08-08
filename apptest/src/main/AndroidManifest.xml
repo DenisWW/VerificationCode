@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jzsec.web.apptest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".MyAppLication"
@@ -9,9 +13,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VerificationCode">
+        android:theme="@style/Theme.VerificationCode"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <service
+            android:name=".service.DownLoadService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".FragmentActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".WeChatActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WeChat"></activity>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,15 +38,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WeChatActivity"
-            android:exported="true"
-            android:theme="@style/Theme.WeChat"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:name=".MainActivity1"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -33,25 +33,34 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/divider.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/gradient_35cc8d_ff_to_00.xml" value="0.145" />
+        <entry key="app/src/main/res/drawable/gradient_35cc8d_ff_to_001.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/gradient_ff5f53_ff_to_00.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/drawable/solid_2a83ff_55.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/solid_999999_5.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/solid_d95643_k5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/solid_daf2e4_1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/solid_eb4a38_30.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/solid_eb4a38_5.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/solid_f3f5f7_5.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/solid_ff5f53_g.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/solid_ff9500_5.xml" value="0.247" />
         <entry key="app/src/main/res/drawable/solid_ffffff_5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/start_show.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/stroke_cccccc_w1_r5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/stroke_eb4a38_1.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/stroke_eb4a38_half.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_adapter.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/activity_bessel.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_bessel.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_dcbkactivity.xml" value="0.42446709916589437" />
+        <entry key="app/src/main/res/layout/activity_dcstock_detail.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/activity_five.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/activity_image.xml" value="0.12512664640324214" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20742753623188406" />
         <entry key="app/src/main/res/layout/activity_mine.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_open_gl.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_three.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/dialog_gray_update_app_layout.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fund_index_center_chart_layout.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/fund_index_correct_buy_layout.xml" value="0.2391304347826087" />
         <entry key="app/src/main/res/layout/fund_index_header_detail_layout.xml" value="0.15081521739130435" />
@@ -66,19 +75,18 @@
         <entry key="app/src/main/res/layout/simple_fragment_layout.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/simple_fragment_layout1.xml" value="0.2557291666666667" />
         <entry key="apptest/src/main/res/drawable/dialog_bg.xml" value="0.12447916666666667" />
-        <entry key="apptest/src/main/res/layout/activity_main(1).xml" value="0.23052536231884058" />
-        <entry key="apptest/src/main/res/layout/activity_main.xml" value="0.5" />
-        <entry key="apptest/src/main/res/layout/activity_main1.xml" value="0.19701086956521738" />
         <entry key="apptest/src/main/res/drawable/suo_bg.xml" value="0.2345" />
         <entry key="apptest/src/main/res/layout/activity_fragment.xml" value="0.1118421052631579" />
         <entry key="apptest/src/main/res/layout/activity_main(1).xml" value="0.23052536231884058" />
-        <entry key="apptest/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="apptest/src/main/res/layout/activity_main.xml" value="0.28174603174603174" />
         <entry key="apptest/src/main/res/layout/activity_main1.xml" value="0.19701086956521738" />
         <entry key="apptest/src/main/res/layout/activity_we_chat.xml" value="0.375" />
         <entry key="apptest/src/main/res/layout/dialog_simple_layout.xml" value="0.19067028985507245" />
         <entry key="apptest/src/main/res/layout/first_fragment_layout.xml" value="0.16979166666666667" />
         <entry key="apptest/src/main/res/layout/second_fragment_layout.xml" value="0.2557291666666667" />
         <entry key="apptest/src/main/res/layout/simple_top_bar_layout.xml" value="0.1" />
+        <entry key="testa/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1575" />
+        <entry key="testa/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1575" />
       </map>
     </option>
   </component>
