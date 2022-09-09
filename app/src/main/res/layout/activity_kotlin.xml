@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:text="Test"
+        android:visibility="gone"
         android:textSize="30dp"
         android:textColor="@color/color_83b2fd"
         app:layout_constraintTop_toTopOf="parent" />

@@ -37,15 +37,17 @@ class SimpleShadowLayout : RelativeLayout {
             Color.parseColor("#000000")
         )
         typedArray.recycle()
-        Log.e("shadowAlpha", "==="+shadowAlpha
-                +"   shadow="+shadow
-                +"   shadowRoundCorner="+shadowRoundCorner
-                +"   shadowColor="+shadowColor
+        Log.e(
+            "shadowAlpha", "===" + shadowAlpha
+                    + "   shadow=" + shadow
+                    + "   shadowRoundCorner=" + shadowRoundCorner
+                    + "   shadowColor=" + shadowColor
         );
         paint.apply {
             this.color = shadowColor
             this.alpha = (shadowAlpha * 255).toInt()
             this.maskFilter = BlurMaskFilter(shadow.toFloat(), BlurMaskFilter.Blur.OUTER)
+//            this.maskFilter = EmbossMaskFilter(floatArrayOf(0F, 0F, 10F), 0F, 0F, 30F)
             this.isAntiAlias = true
         }
     }

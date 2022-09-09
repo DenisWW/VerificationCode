@@ -43,11 +43,7 @@
         <activity
             android:name=".activity.OpenGlActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.DCBKActivity"
@@ -70,7 +66,11 @@
             android:process=":service" />
 
         <activity android:name=".activity.KotlinActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <!-- android:launchMode="singleTask" 一起使用才有作用     android:taskAffinity="com.android.aa" -->
 
         </activity>

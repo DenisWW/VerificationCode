@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class BesselActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bessel);
         initView();
-        Color.argb(0,0,0,0);
+        Color.argb(0, 0, 0, 0);
 //        startAnimator();
 //        ++i;
         Log.e("onCreate", "=====" + (++i == 1));

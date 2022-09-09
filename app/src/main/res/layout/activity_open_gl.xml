@@ -13,12 +13,38 @@
         android:layout_height="100dp"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/text_test_view"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+    <com.nineone.verificationcode.view.SimpleShadowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/login_top_icon"
+        android:background="@color/white"
+        android:padding="12dp"
+        app:shadow_alpha="0.1"
+        app:shadow_radius_dp="8dp"
+        app:shadow_round_corner_dp="10dp">
+
+        <!--        <com.nineone.verificationcode.view.SimpleShadowLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/login_top_icon"-->
+        <!--            android:layout_margin="12dp"-->
+        <!--            app:shadow_dp="12dp">-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="12312312312312312" />
+        <!--        </com.nineone.verificationcode.view.SimpleShadowLayout>-->
+    </com.nineone.verificationcode.view.SimpleShadowLayout>
+
+    <TextView
+        android:id="@+id/text_test_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textSize="14sp" />
 
     <FrameLayout
@@ -28,16 +54,7 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/center_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/solid_f3f5f7_5"
-            android:maxLines="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="18sp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +79,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/center_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/solid_f3f5f7_5"
+            android:maxLines="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/text_selector"
+            android:text="测试一下"
+            android:textSize="18sp" />
     </FrameLayout>
 </LinearLayout>
