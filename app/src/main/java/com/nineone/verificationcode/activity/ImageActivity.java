@@ -278,6 +278,7 @@ public class ImageActivity extends Activity {
 
     private void initConcat() {
 //        .firstElement()   按顺序连接多个Observables。需要注意的是Observable.concat(a,b)等价于a.concatWith(b)。
+
         Observable.concat(Observable.just(100, 300), Observable.just(200, 400)).subscribeOn(Schedulers.io()).subscribe(new Observer<Integer>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {

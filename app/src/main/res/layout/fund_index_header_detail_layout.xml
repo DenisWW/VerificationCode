@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:text="沪深300"
         android:textSize="24sp"
-        android:textColor="@color/dk_color_333333"
+        android:textColor="@color/color_4F22FF"
         android:textStyle="bold"
         app:layout_constraintRight_toLeftOf="@+id/tv_data_instruction"
         app:layout_constraintStart_toStartOf="parent"

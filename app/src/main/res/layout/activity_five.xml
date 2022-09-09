@@ -45,6 +45,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -54,10 +55,18 @@
         android:layout_height="wrap_content"
         android:onClick="clickB" />
 
-    <ImageView
+    <com.nineone.verificationcode.view.IMasterImageView
         android:id="@+id/iv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/imaster_uikit_tip_normal_svg"
+        android:layout_below="@+id/button_view" />
+
+    <TextView
+        android:id="@+id/tv_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@+id/button_view"
-        android:background="@drawable/start_show" />
+        android:textColor="@color/color_4F22FF"/>
 </RelativeLayout>

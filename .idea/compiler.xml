@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="annotation" target="1.7" />
+      <module name="buildSrc" target="1.8" />
       <module name="groovyLib" target="1.7" />
       <module name="processor-compiler" target="1.7" />
       <module name="VerificationCode.app" target="1.8" />

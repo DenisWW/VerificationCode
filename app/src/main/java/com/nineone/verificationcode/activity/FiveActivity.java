@@ -4,7 +4,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.XmlResourceParser;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -12,11 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.nineone.verificationcode.bean.UserBean;
 import com.nineone.verificationcode.service.AIDLService;
 import com.nineone.verificationcode.BookController;
@@ -24,6 +32,8 @@ import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.adapter.ViewPagerAdapter2;
 import com.nineone.verificationcode.fragment.TestFragment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +46,68 @@ public class FiveActivity extends FragmentActivity {
     private ImageView iv;
     private AnimationDrawable animationDrawable;
 
+    private TextView tv;
+    /**
+     * [ a, b, c, d, e,
+     * f, g, h, i, j,
+     * k, l, m, n, o,
+     * p, q, r, s, t ]
+     * R’ = a*R + b*G + c*B + d*A + e;
+     * G’ = f*R + g*G + h*B + i*A + j;
+     * B’ = k*R + l*G + m*B + n*A + o;
+     * A’ = p*R + q*G + r*B + s*A + t;
+     */
+    float[] colorMatrix = {1, 0.5F, 0.5F, 0, 0, //red
+            0, 1, 0, 0, 0, //green
+            0, 0, 1, 0, 0, //blue
+            0, 0, 0, 1, 0 //alpha
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_five);
+        tv = findViewById(R.id.tv_1);
 
+//        ArgbEvaluatorCompat.getInstance().evaluate();
+        ImageView imageView = findViewById(R.id.iv);
+//        Color.colorSpace()
+        Log.e("color===", "====" + Color.parseColor("#000000")
+                + "    ==" + Color.parseColor("#888888")
+                + "    color==" + getResources().getResourceName(R.color.color_4F22FF)
+                + "    drawable==" + getResources().getResourceName(R.drawable.one)
+                + "    ==" + getPackageResourcePath()
+                + "    ==" + getPackageCodePath()
+                + "    ==" + imageView.getDrawable()
+                + "    ==" + Color.parseColor("#FFFFFF")
+        );
+        imageView.setImageResource(R.drawable.bottom_bg);
+        XmlResourceParser xmlResourceParser;
 
+        imageView.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+//        getResources().getIdentifier()
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.one);
+                ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+                ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos1);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 95, baos2);
+
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data1 = baos1.toByteArray();
+                byte[] data2 = baos2.toByteArray();
+                Bitmap bitmap2 = BitmapFactory.decodeByteArray(data2, 0, data2.length);
+                Log.e("bitmap==", "===" + bitmap.getByteCount() + "  bitmap1=  " + bitmap2.getByteCount() + "  data1=  " + data1.length + "  data2=  " + data2.length + "  rate=  " + (data2.length * 1F / data1.length) + "  rate=  " + "   ===" + isSystemRoot());
+                tv.post(() -> tv.setText(isSystemRoot() + ""));
+
+            }
+        }.start();
+
+        Glide.with(this).load(R.drawable.one).into(imageView);
+        Log.e("FiveActivity", "===" + FiveActivity.class.getName());
 //        SurfaceView view_surface = findViewById(R.id.view_surface);
 //        MediaPlayer mediaPlayer = new MediaPlayer();
 //
@@ -127,7 +193,8 @@ public class FiveActivity extends FragmentActivity {
 //        List<ActivityManager.RunningTaskInfo> runningTasks = manager.getRunningTasks(1);
 //        ActivityManager.RunningTaskInfo cinfo = runningTasks.get(0);
 
-        Log.e("         =========" + this.getClass().getName(), "     onCreate==" + iv.getBackground());
+//        Book1 book1= AIDLService.book1;
+        Log.e("=========" + this.getClass().getName(), "     onCreate==" + iv.getBackground() + "===" + AIDLService.AUDIO_SERVICE);
         animationDrawable = (AnimationDrawable) iv.getBackground();
         Intent intent = new Intent(this, AIDLService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -136,7 +203,10 @@ public class FiveActivity extends FragmentActivity {
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent1);
         });
-
+//        AssetManager assetManager = getAssets();
+//        for (String s : assetManager.getLocales()) {
+//            Log.e("Locales", "===" + s);
+//        }
     }
 
     private BookController controller;
@@ -234,6 +304,24 @@ public class FiveActivity extends FragmentActivity {
 //        });
 //        animator.setDuration(10000);
 //        animator.start();
+    }
+
+    private static final String[] a = new String[]{"/su", "/su/bin/su", "/sbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/data/local/su", "/system/xbin/su", "/system/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/system/bin/cufsdosck", "/system/xbin/cufsdosck", "/system/bin/cufsmgr", "/system/xbin/cufsmgr", "/system/bin/cufaevdd", "/system/xbin/cufaevdd", "/system/bin/conbb", "/system/xbin/conbb"};
+
+    public boolean isSystemRoot() {
+        boolean var0 = false;
+        String[] var1;
+        int var2 = (var1 = a).length;
+
+        for (int var3 = 0; var3 < var2; ++var3) {
+            String var4 = var1[var3];
+            if ((new File(var4)).exists()) {
+                var0 = true;
+                break;
+            }
+        }
+
+        return Build.TAGS != null && Build.TAGS.contains("test-keys") || var0;
     }
 
 }

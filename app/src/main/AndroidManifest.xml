@@ -43,11 +43,7 @@
         <activity
             android:name=".activity.OpenGlActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.DCBKActivity"
@@ -74,9 +70,13 @@
             <!-- android:launchMode="singleTask" 一起使用才有作用     android:taskAffinity="com.android.aa" -->
 
         </activity>
-        <activity
-            android:name=".activity.FiveActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".activity.FiveActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.LocationService"

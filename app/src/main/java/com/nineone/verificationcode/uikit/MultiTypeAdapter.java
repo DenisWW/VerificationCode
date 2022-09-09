@@ -38,4 +38,9 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
     public final int getItemCount() {
         return items.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 }

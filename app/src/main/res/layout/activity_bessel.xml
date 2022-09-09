@@ -107,7 +107,7 @@
                 android:id="@+id/dc_go2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMinTextSize="@dimen/dk_dp_4"
+                android:autoSizeMinTextSize="15dp"
                 android:background="@color/color_4F22FF"
                 android:includeFontPadding="false"
                 android:text="同"

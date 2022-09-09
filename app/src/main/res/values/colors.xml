@@ -24,4 +24,10 @@
     <color name="color_ff70ae">#ff70ae</color>
     <color name="color_4F22FF">#4F22FF</color>
     <color name="color_F29E4A">#F29E4A</color>
+    <array name="five_colors">
+        <item>@color/color_e163f7</item>
+        <item>@color/color_bb7af2</item>
+        <item>@color/color_4F22FF</item>
+        <item>@color/color_F29E4A</item>
+    </array>
 </resources>

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.nineone.verificationcode.BookController;
 import com.nineone.verificationcode.bean.Book;
+import com.nineone.verificationcode.bean.Book1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public class AIDLService extends Service {
 
     private List<Book> list;
+
+    public static final Book1 b = new Book1("bbb");
+    public static final Book1 book1 = new Book1("bbbbbb");
 
     public AIDLService() {
     }
@@ -49,14 +53,14 @@ public class AIDLService extends Service {
 
     private final BookController.Stub stub = new BookController.Stub() {
         @Override
-        public List<Book> getBookList() throws RemoteException {
+        public List<Book> getBookList() {
             return list;
         }
 
         @Override
         public void addBookInOut(Book book) throws RemoteException {
             if (book != null) {
-                Log.e("addBookInOut","=="+book.name);
+                Log.e("addBookInOut", "==" + book.name);
             }
         }
     };

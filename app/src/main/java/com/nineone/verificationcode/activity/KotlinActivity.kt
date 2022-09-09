@@ -1,31 +1,45 @@
 package com.nineone.verificationcode.activity
 
-import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.nineone.verificationcode.R
 import com.nineone.verificationcode.utils.SimpleData
 import kotlinx.android.synthetic.main.activity_kotlin.*
 import kotlinx.android.synthetic.main.activity_kotlin.tv_test
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.ContinuationInterceptor
 
-class KotlinActivity : Activity() {
+class KotlinActivity : AppCompatActivity() {
     var list: ArrayList<String>? = null;
     var a = 0;
     var b = 1;
     var simpleflow: Flow<String>? = null
-    var sharedFlow: SharedFlow<String>? = null
+    var sharedFlow: MutableStateFlow<String>? = null
+    val myViewModel: MyViewModel by lazy {
+        ViewModelProvider(this).get(MyViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
-        Log.e(localClassName, "${mainLooper.thread.name + "      id==" + mainLooper.thread.id}")
+        val data = null
+        Log.e(localClassName, "${data ?: "121131"}")
 //        test()
 //        val job = testJob()
 //        val simpleData = SimpleData("用户名");
@@ -36,18 +50,34 @@ class KotlinActivity : Activity() {
 //                super.run()
 //            }
 //        }.start()
+        myViewModel.model.postValue("哈哈哈哈")
+        Log.e("it====", "===${Intent.FLAG_ACTIVITY_NEW_TASK}");
         tv_test.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                GlobalScope.launch(Dispatchers.Default) {
+//                GlobalScope.launch(Dispatchers.Default) {
 //                    sharedFlow("why");
+//                }
+                myViewModel.model.observe(this@KotlinActivity) {
+                    Log.e("it====", "===${it}");
                 }
             }
         })
 
+
 //        channelFlow<String> {
 //
 //        }
-
+//       dataEt.transformationMethod = object : ReplacementTransformationMethod() {
+//            override fun getOriginal(): CharArray {
+//                return charArrayOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+//                    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ')
+//            }
+//
+//            override fun getReplacement(): CharArray {
+//                return charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+//                    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '')
+//            }
+//        }
         runBlocking {
             simpleflow = simpleFlow();
             simpleflow?.let {
@@ -107,6 +137,29 @@ class KotlinActivity : Activity() {
         }
 
 
+    }
+    @Suppress("BlockingMethodInNonBlockingContext")
+    fun saveLog(context: Context, value: String, name: String) {
+        runBlocking {
+            val job = launch {
+                val file: File = File(context.filesDir.path + "/${name}.txt")
+                var fileOutputStream: FileOutputStream? = null
+                try {
+                    val parent = file.parentFile
+                    if (parent != null && !parent.exists()) parent.mkdirs()
+                    if (!file.exists()) file.createNewFile()
+                    fileOutputStream = FileOutputStream(file)
+                    fileOutputStream.write(encodeToString(value.toByteArray(), DEFAULT).toByteArray())
+                    fileOutputStream.flush()
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    fileOutputStream?.close()
+                }
+            }
+            job.start()
+        }
     }
 
     //channelFlow 返回的是热流 是异步的。
@@ -197,4 +250,8 @@ class KotlinActivity : Activity() {
     }
 }
 
+class MyViewModel : ViewModel() {
+    val model: MutableLiveData<String> = MutableLiveData()
+
+}
 typealias UserCall = (SimpleData) -> Unit

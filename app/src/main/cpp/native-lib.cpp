@@ -7,8 +7,13 @@
 #include <android/log.h>
 #include "csignal"
 #include "pthread.h"
+#include "thread"
 #include "vector"
 #include "list"
+#include "glob.h"
+#include "zlib.h"
+//#include "cgicc/CgiDefs.h"
+#include "drm/drm.h"
 
 namespace why {
 
@@ -153,40 +158,57 @@ void signalHandler(int signum) {
 //    exit(signum);
 }
 
-void *sayHello(void *args) {
-
-//    struct
-    return 0;
-}
-
 struct thread_data {
     int thread_id;
     char *message;
 };
 
+
+void *sayHello(void *args) {
+    auto *d = (struct thread_data *) args;
+    pthread_exit(nullptr);
+}
+//#include <sys/mman.h>
+//#include <sys/stat.h>
+//#include <fcntl.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <unistd.h>
+
 class ShapeBox : public Box, public ABox {
     void get() {
+//        malloc()
         Box *b = new Box();
 //        MIN(1,2);
 //        raise()
         pthread_t pthread;
-        struct thread_data data;
+        struct thread_data data{1, "Test"};
         data.message = "message";
         data.thread_id = 1;
-        pthread_create(&pthread, NULL, sayHello, &data);
+        //参数依次是：创建的线程id，线程参数，调用的函数，传入的函数参数
+        pthread_create(&pthread, nullptr, sayHello, (void *) &data);
 //        pthread_join()
         //等各个线程退出后，进程才结束，否则进程强制结束了，线程可能还没反应过来；
-        pthread_exit(NULL);
+        pthread_exit(nullptr);
         signal(SIGINT, signalHandler);
         thread t1();
-
+//        pthread_join() 链接
+//        pthread_detach() 分离
         pthread_attr_t attr;
         pthread_attr_init(&attr);
+
+
+//        vector<int> v;
+//        v.push_back(2);
+//        vector<int>::iterator t = v.begin();
+//        while (t != v.end()) {
+//
+//        }
+
+        cout << "输出是什么呢";
         delete b;
     }
 };
-
-
 
 
 

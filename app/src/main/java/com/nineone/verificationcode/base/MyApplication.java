@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
-import com.didichuxing.doraemonkit.DoKit;
-
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -21,7 +19,7 @@ public class MyApplication extends Application {
 
             }
         });
-       new  DoKit.Builder(this).build();
+//       new  DoKit.Builder(this).build();
 
     }
 }

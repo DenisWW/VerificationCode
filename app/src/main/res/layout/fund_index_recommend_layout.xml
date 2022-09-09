@@ -12,7 +12,7 @@
         android:layout_marginTop="16dp"
         android:minHeight="20dp"
         android:text="优选基金"
-        android:textColor="@color/dk_color_333333"
+        android:textColor="@color/color_4F22FF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/dk_color_F5F6F7"
+        android:background="@color/color_4F22FF"
         app:layout_constraintTop_toBottomOf="@+id/ll_index_recommend" />
 
     <LinearLayout
@@ -97,7 +97,7 @@
             android:layout_weight="1"
             android:minHeight="20dp"
             android:text="成分股"
-            android:textColor="@color/dk_color_333333"
+            android:textColor="@color/color_4F22FF"
             android:textSize="16sp"
             android:textStyle="bold" />
 

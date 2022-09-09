@@ -1,6 +1,7 @@
 package com.nineone.verificationcode.activity;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -121,6 +122,11 @@ public class AdapterActivity extends AppCompatActivity {
         String json = "{\"name\":null}";
         Book book = new Gson().fromJson(json, Book.class);
         Log.e("book", "====" + book.name);
+
+        AssetManager assetManager = getAssets();
+        for (String s : assetManager.getLocales()) {
+            Log.e("Locales", "==="+s);
+        }
 
     }
 

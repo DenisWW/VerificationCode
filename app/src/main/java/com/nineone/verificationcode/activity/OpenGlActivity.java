@@ -3,6 +3,7 @@ package com.nineone.verificationcode.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -14,6 +15,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Typeface;
+import android.net.VpnManager;
+import android.net.VpnService;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -25,9 +28,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.utils.CenterAlignImageSpan;
+import com.nineone.verificationcode.utils.ToastUtils;
 
 import org.w3c.dom.Text;
 
@@ -46,7 +51,6 @@ public class OpenGlActivity extends Activity {
     private FrameLayout layout;
     private TextView center_view;
     private static int itemHeight;
-    private static int itemHeight1;
     private static float density;
 
     @Override
@@ -57,9 +61,17 @@ public class OpenGlActivity extends Activity {
         recycler_view1 = findViewById(R.id.recycler_view1);
         recycler_view2 = findViewById(R.id.recycler_view2);
         center_view = findViewById(R.id.center_view);
+        center_view.setTextColor(ContextCompat.getColorStateList(this, R.color.text_selector));
+        center_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "点击一下", Toast.LENGTH_SHORT).show();
+            }
+        });
         layout = findViewById(R.id.layout);
+        LinearLayoutManager rightManager;
         recycler_view.setLayoutManager(new CustomLayoutManager(this));
-        recycler_view1.setLayoutManager(new CustomLayoutManager(this));
+        recycler_view1.setLayoutManager(rightManager = new CustomLayoutManager(this));
 
         TextView textView = findViewById(R.id.text_test_view);
         String s = " 1234567890";
@@ -71,6 +83,8 @@ public class OpenGlActivity extends Activity {
         spannable.setSpan(new CenterAlignImageSpan(this, R.mipmap.label_ke), s.length() - 1, s.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         spannable.setSpan(new CenterAlignImageSpan(this, R.mipmap.label_ke), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         textView.setText(spannable);
+
+
 
         SnapHelperCenter pagerSnapHelper = new SnapHelperCenter();
         pagerSnapHelper.attachToRecyclerView(recycler_view);
@@ -84,32 +98,21 @@ public class OpenGlActivity extends Activity {
         int inth = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         center_view.measure(intw, inth);
         textView.measure(intw, inth);
-        Log.e("textView", "===" + textView.getMeasuredHeight());
-        ll.height = center_view.getMeasuredHeight() * 7;
         layout.setLayoutParams(ll);
         if (itemHeight == 0) {
-            itemHeight = center_view.getMeasuredHeight() * 3;
-            itemHeight1 = center_view.getMeasuredHeight();
+            itemHeight = center_view.getMeasuredHeight();
         }
+        ll.height = center_view.getMeasuredHeight() * 7;
         density = getResources().getDisplayMetrics().density;
         recycler_view.setAdapter(new TextViewAdapter());
-
         recycler_view1.setAdapter(new TextViewAdapter1());
 
+        rightManager.scrollToPositionWithOffset(0, -itemHeight);
+//        rightManager.scrollToPositionWithOffset(0, 0);
         recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    View view;
-                    View centerView;
-                    int bestCenter = -1;
-                    int center = recyclerView.getHeight() / 2;
-                    int absClosest = Integer.MAX_VALUE;
-
-
-                }
             }
 
             @Override
@@ -117,10 +120,70 @@ public class OpenGlActivity extends Activity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-//        BigDecimal decimal = new BigDecimal("1.402000");
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            Log.e("Thread222222", "======" + Thread.currentThread().getName());
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+//                            Log.e("Thread222233", "======" + Thread.currentThread().getName());
+                        }
+                    };
+                    thread.start();
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.e("Thread1111", "======" + Thread.currentThread().getName());
+            }
+        }.start();
+//        Log.e("=======", "======" + "".charAt(0));
+        //        BigDecimal decimal = new BigDecimal("1.402000");
 //        BigDecimal bigDecimal = decimal.setScale(2, RoundingMode.FLOOR);
 //        DecimalFormat decimalFormat=new DecimalFormat();
 //        decimalFormat.format()
+
+//        recycler_view1.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            int currentCenterItem;
+//            private LinearLayoutManager layoutManager;
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (layoutManager == null)
+//                    layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                if (layoutManager != null) {
+//                    int center = (layoutManager.findFirstVisibleItemPosition()
+//                            + (layoutManager.findLastVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()) / 2);
+//                    View view = layoutManager.findViewByPosition(center);
+//                    if (view == null) return;
+//                    int centerHeight = recyclerView.getHeight() / 2;
+//                    int top = (view.getTop() + view.getHeight() / 2);
+//                    int distance = Math.abs(top - centerHeight);
+//                    if (distance > view.getMeasuredHeight() / 2) {
+//                        if (currentCenterItem != center + 1) {
+//                            currentCenterItem = center + 1;
+//                            Log.e("onScrolled", "====" + currentCenterItem);
+//                        }
+//                    } else {
+//                        if (currentCenterItem != center) {
+//                            currentCenterItem = center;
+//                            Log.e("onScrolled", "====" + currentCenterItem);
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 
@@ -159,17 +222,37 @@ public class OpenGlActivity extends Activity {
             View closestChild = null;
             final int center = helper.getStartAfterPadding() + helper.getTotalSpace() / 2;
             int absClosest = Integer.MAX_VALUE;
+            float scaleValue;
             for (int i = 0; i < childCount; i++) {
                 final View child = layoutManager.getChildAt(i);
                 if (child == null) continue;
-                int childCenter = helper.getDecoratedStart(child) + child.getPaddingTop() + ((helper.getDecoratedMeasurement(child) - child.getPaddingTop() - child.getPaddingBottom()) / 2);
+                int childCenter = helper.getDecoratedStart(child) + child.getPaddingTop() +
+                        ((helper.getDecoratedMeasurement(child) - child.getPaddingTop() - child.getPaddingBottom()) / 2);
                 int absDistance = Math.abs(childCenter - center);
                 /** if child center is closer than previous closest, set it as closest  **/
                 if (absDistance < absClosest) {
                     absClosest = absDistance;
                     closestChild = child;
                 }
+                float viewCenter = child.getTop() + child.getPaddingTop() +
+                        (child.getHeight() - child.getPaddingTop() - child.getPaddingBottom()) / 2F;
+//                int viewCenter = (child.getHeight() - child.getPaddingTop() - child.getPaddingBottom()) / 2 + child.getTop() + child.getPaddingTop();
+                int distanceCenter = (int) Math.abs(viewCenter - center);
+                TextView tv = ((TextView) ((ViewGroup) child).getChildAt(0));
+                TextView invisibleTv = ((TextView) ((ViewGroup) child).getChildAt(1));
+                scaleValue = Math.min((distanceCenter * 1F / invisibleTv.getMeasuredHeight()), 1F);
+                float textSize = 18F * density - 4F * density * scaleValue;
+                if (scaleValue > 0.5f) {
+                    tv.setTextColor(Color.parseColor("#999999"));
+                    tv.setTypeface(Typeface.DEFAULT);
+                } else {
+                    tv.setTextColor(Color.parseColor("#333333"));
+                    tv.setTypeface(Typeface.DEFAULT_BOLD);
+                }
+                if (tv.getTextSize() != textSize)
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             }
+            Log.e("findCenterView", "====" + closestChild);
             return closestChild;
         }
 
@@ -313,15 +396,14 @@ public class OpenGlActivity extends Activity {
                 if (getChildAt(i) == null) continue;
                 child = (ViewGroup) getChildAt(i);
                 if (child == null) continue;
-                int viewCenter = (child.getHeight() - child.getPaddingTop() - child.getPaddingBottom()) / 2
-                        + child.getTop() + child.getPaddingTop();
-                int distanceCenter = Math.abs(viewCenter - center);
+                float viewCenter = child.getTop() + child.getPaddingTop() +
+                        (child.getHeight() - child.getPaddingTop() - child.getPaddingBottom()) / 2F;
+                int distanceCenter = (int) Math.abs(viewCenter - center);
                 TextView tv = ((TextView) child.getChildAt(0));
-                scaleValue = Math.min((distanceCenter * 1F / itemHeight1), 1F);
+                TextView invisibleTv = ((TextView) child.getChildAt(1));
+                scaleValue = Math.min((distanceCenter * 1F / invisibleTv.getMeasuredHeight()), 1F);
                 float textSize = 18F * density - 4F * density * scaleValue;
-//                Log.e("distanceCenter", "  ===" + i + "  distanceCenter=" + distanceCenter
-//                        + "  scaleValue=" + scaleValue
-//                );
+//                Log.e("distanceCenter", "  ===" + i + "  distanceCenter=" + distanceCenter + "  scaleValue=" + scaleValue);
                 if (scaleValue > 0.5f) {
                     tv.setTextColor(Color.parseColor("#999999"));
                     tv.setTypeface(Typeface.DEFAULT);
@@ -339,34 +421,6 @@ public class OpenGlActivity extends Activity {
             }
             return super.scrollVerticallyBy(dy, recycler, state);
         }
-
-        @Override
-        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-            super.onLayoutChildren(recycler, state);
-            Log.e("onLayoutChildren", "===" + recycler.getScrapList());
-        }
-
-        @Override
-        public void layoutDecorated(@NonNull View child, int left, int top, int right, int bottom) {
-            super.layoutDecorated(child, left, top, right, bottom);
-            Log.e("layoutDecorated", "===" + child);
-        }
-
-
-        @Override
-        public void layoutDecoratedWithMargins(@NonNull View child, int left, int top, int right, int bottom) {
-            super.layoutDecoratedWithMargins(child, left, top, right, bottom);
-//            int position = getPosition(child);
-//            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-//            if (position == 0) itemHeight = child.getMeasuredHeight() * 3;
-//            if (position == 0 && layoutParams.topMargin == 0) {
-//                layoutParams.topMargin = itemHeight;
-//            } else if (position != 0) {
-//                layoutParams.topMargin = 0;
-//            }
-//            child.setLayoutParams(layoutParams);
-        }
-
     }
 
     public static class TextViewAdapter extends RecyclerView.Adapter<TextViewViewHolder> {
@@ -401,10 +455,10 @@ public class OpenGlActivity extends Activity {
 //            }
             if ((position == 0)) {
 //                 && holder.itemView.getPaddingTop() == 0
-                holder.itemView.setPadding(0, itemHeight, 0, 0);
+                holder.itemView.setPadding(0, itemHeight * 3, 0, 0);
             } else if (position == data.size() - 1) {
 //                && holder.itemView.getPaddingBottom() == 0
-                holder.itemView.setPadding(0, 0, 0, itemHeight);
+                holder.itemView.setPadding(0, 0, 0, itemHeight * 3);
             } else {
                 holder.itemView.setPadding(0, 0, 0, 0);
             }
@@ -440,7 +494,7 @@ public class OpenGlActivity extends Activity {
 
             textViewInvisible = new TextView(itemView.getContext());
             ((ViewGroup) itemView).addView(textViewInvisible, new ViewGroup.LayoutParams(1, LinearLayout.LayoutParams.WRAP_CONTENT));
-            textViewInvisible.setTextSize(18f);
+            textViewInvisible.setTextSize(18F);
             textViewInvisible.setPadding(0, (int) itemView.getResources().getDisplayMetrics().density * 5, 0, (int) itemView.getResources().getDisplayMetrics().density * 5);
 
 
@@ -454,7 +508,7 @@ public class OpenGlActivity extends Activity {
 
         public TextViewAdapter1() {
             for (int i = 0; i < 20; i++) {
-                data.add("测试条目===" + i);
+                data.add("测" + i);
             }
         }
 
@@ -469,17 +523,18 @@ public class OpenGlActivity extends Activity {
 
         @Override
         public void onBindViewHolder(@NonNull TextViewViewHolder holder, int position) {
-            Log.e("holder.itemView", "====" + holder.itemView.getLayoutParams());
+//            Log.e("holder.itemView", "====" + holder.itemView.getLayoutParams());
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             if (position == 0 || position == data.size() + 1) {
                 holder.textView.setText("");
-                layoutParams.height = itemHeight;
+                layoutParams.height = itemHeight * 3;
+                holder.itemView.setPadding(0, position == 0 ? itemHeight * 2 : 0, 0, position == data.size() + 1 ? itemHeight * 2 : 0);
             } else {
                 holder.textView.setText(data.get(position - 1));
                 layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                holder.itemView.setPadding(0, 0, 0, 0);
             }
             holder.itemView.setLayoutParams(layoutParams);
-
 //            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.textView.getLayoutParams();
 //            if (position == 0 && layoutParams.topMargin == 0) {
 //                layoutParams.topMargin = itemHeight;
@@ -496,5 +551,54 @@ public class OpenGlActivity extends Activity {
         }
     }
 
+    public static class TextViewAdapter2 extends RecyclerView.Adapter<TextViewViewHolder> {
+
+        private final List<String> data = new ArrayList<>();
+
+        public TextViewAdapter2() {
+            for (int i = 0; i < 20; i++) {
+                data.add("测试" + i);
+            }
+        }
+
+        @NonNull
+        @Override
+        public TextViewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LinearLayout linearLayout = new LinearLayout(parent.getContext());
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            return new TextViewViewHolder(linearLayout);
+        }
+
+
+        @Override
+        public void onBindViewHolder(@NonNull TextViewViewHolder holder, int position) {
+//            Log.e("holder.itemView", "====" + holder.itemView.getLayoutParams());
+//            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+            if (position < 3 || position > data.size() + 2) {
+                holder.textView.setText("");
+//                layoutParams.height = itemHeight * 3;
+//                holder.itemView.setPadding(0, position == 0 ? itemHeight * 2 : 0, 0, position == data.size() + 1 ? itemHeight * 2 : 0);
+            } else {
+                holder.textView.setText(data.get(position - 3));
+//                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//                holder.itemView.setPadding(0, 0, 0, 0);
+            }
+//            holder.itemView.setLayoutParams(layoutParams);
+
+//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.textView.getLayoutParams();
+//            if (position == 0 && layoutParams.topMargin == 0) {
+//                layoutParams.topMargin = itemHeight;
+//                holder.textView.setLayoutParams(layoutParams);
+//            } else if (position != 0 && layoutParams.topMargin > 0) {
+//                layoutParams.topMargin = 0;
+//                holder.textView.setLayoutParams(layoutParams);
+//            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size() + 6;
+        }
+    }
 
 }
