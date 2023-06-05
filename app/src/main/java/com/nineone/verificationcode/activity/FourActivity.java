@@ -1,52 +1,79 @@
 package com.nineone.verificationcode.activity;
 
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.RawRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nineone.verificationcode.R;
+import com.nineone.verificationcode.bean.Bean;
+import com.nineone.verificationcode.fragment.TestFragment2;
 
+import java.io.FileDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FourActivity extends Activity {
+public class FourActivity extends FragmentActivity {
     private RecyclerView recycler;
     private Context context;
     private int height;
     private List<SimpleBean> list = new ArrayList<>();
-    private int[] ids = new int[]{
-            R.color.tag_00a0e9,
-            R.color.tag_eea266,
-            R.color.tag_916ed9,
-            R.color.color_f763fb,
-            R.color.color_ff70ae,
-
-
-    };
+    private int[] ids = new int[]{R.color.tag_00a0e9, R.color.tag_eea266, R.color.tag_916ed9, R.color.color_f763fb, R.color.color_ff70ae};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four);
-        context = this;
-        height = context.getResources().getDisplayMetrics().heightPixels;
-        init();
+        for (int i = 0; i < ids.length; i++) {
+            TestFragment2 fragment2 = new TestFragment2();
+            Bundle bundle = new Bundle();
+            bundle.putInt("colorKey", ids[i]);
+            fragment2.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fragment2).addToBackStack(String.valueOf(i)).commitAllowingStateLoss();
+
+        }
+        int intw = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int inth = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        TextView textView = findViewById(R.id.back_bt);
+        textView.measure(intw, inth);
+        int intwidth = textView.getMeasuredWidth();
+        int intheight = textView.getMeasuredHeight();
+        Log.e("intwidth", "===" + intwidth + "     intheight==" + intheight);
+//        HashSet<String> hashSet = new HashSet<>();
+//        hashSet.add("2");
+//        hashSet.add("1");
+//        hashSet.add("4");
+//        hashSet.add("5");
+//        Log.e("有序", "======" + hashSet);
+//        for (String s : hashSet) {
+//            Log.e("有序", "======" + s);
+//        }
+//        context = this;
+//        height = context.getResources().getDisplayMetrics().heightPixels;
+//        init();
+        try {
+            Method method = FileDescriptor.class.getDeclaredMethod("getInt$");
+            Bean bean = new Bean(5);
+            Field field = Bean.class.getDeclaredField("type");
+            field.setAccessible(true);
+            Log.e("method", "===" + field.get(bean));
+
+        } catch (NoSuchMethodException | IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void init() {
@@ -60,7 +87,7 @@ public class FourActivity extends Activity {
         recycler = findViewById(R.id.recycler);
         recycler.setAdapter(new SimpleAdapter());
         recycler.setLayoutManager(new MyManager(context));
-        Log.e("SimpleAdapter", "==="+((10&15)));
+        Log.e("SimpleAdapter", "===" + ((10 & 15)));
     }
 
     private class MyManager extends LinearLayoutManager {

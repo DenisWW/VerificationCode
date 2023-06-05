@@ -13,9 +13,14 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.nineone.verificationcode.bean.UserBean;
 import com.nineone.verificationcode.service.AIDLService;
@@ -31,6 +37,9 @@ import com.nineone.verificationcode.BookController;
 import com.nineone.verificationcode.R;
 import com.nineone.verificationcode.adapter.ViewPagerAdapter2;
 import com.nineone.verificationcode.fragment.TestFragment;
+
+import org.libpag.PAGFile;
+import org.libpag.PAGView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -63,29 +72,81 @@ public class FiveActivity extends FragmentActivity {
             0, 0, 0, 1, 0 //alpha
     };
 
+    private PAGView pagView;
+    private PAGView[] pagViews = new PAGView[5];
+    private LottieAnimationView animation_view;
+    private LottieAnimationView[] animation_views = new LottieAnimationView[5];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_five);
-        tv = findViewById(R.id.tv_1);
+        WebView webView = findViewById(R.id.webView);
+        pagView = findViewById(R.id.pag_view);
+        animation_view = findViewById(R.id.animation_view);
 
+
+        pagViews[0] = pagView;
+        pagViews[1] = findViewById(R.id.pag_view1);
+        pagViews[2] = findViewById(R.id.pag_view2);
+        pagViews[3] = findViewById(R.id.pag_view3);
+        pagViews[4] = findViewById(R.id.pag_view4);
+
+
+        animation_views[0] = animation_view;
+        animation_views[1] = findViewById(R.id.animation_view1);
+        animation_views[2] = findViewById(R.id.animation_view2);
+        animation_views[3] = findViewById(R.id.animation_view3);
+        animation_views[4] = findViewById(R.id.animation_view4);
+
+        for (PAGView pv:pagViews){
+            pv.setComposition(PAGFile.Load(getAssets(), "start.pag"));
+            pv.setRepeatCount(0);
+            pv.play();
+        }
+
+        for (LottieAnimationView av:animation_views){
+            av.setAnimation(R.raw.data);
+        }
+
+        WebSettings mWebSettings = webView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);//设置支持javaScript
+        mWebSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        mWebSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        mWebSettings.setUserAgentString("User-Agent");
+        mWebSettings.setLightTouchEnabled(true);//设置用鼠标激活被选项
+        mWebSettings.setBuiltInZoomControls(true);//设置支持缩放
+        mWebSettings.setDomStorageEnabled(true);//设置DOM缓存，当H5网页使用localStorage时，一定要设置
+        mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);//设置去缓存，防止加载的为上一次加载过的
+        mWebSettings.setSupportZoom(true);//设置支持变焦
+        webView.setHapticFeedbackEnabled(false);
+        mWebSettings.setPluginState(WebSettings.PluginState.ON);
+        mWebSettings.setAllowFileAccess(true);
+        mWebSettings.setAllowContentAccess(true);
+        mWebSettings.setAllowUniversalAccessFromFileURLs(true);
+        mWebSettings.setAllowFileAccessFromFileURLs(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.e("onPageFinished", "=====");
+            }
+
+        });
+        webView.setWebChromeClient(new WebChromeClient() {
+
+        });
+        webView.loadUrl("file:///android_asset/why.html");
+        tv = findViewById(R.id.tv_1);
+        Log.e("business_Amount", "        ".toLowerCase() + "===" + TextUtils.isEmpty("        "));
 //        ArgbEvaluatorCompat.getInstance().evaluate();
         ImageView imageView = findViewById(R.id.iv);
 //        Color.colorSpace()
-        Log.e("color===", "====" + Color.parseColor("#000000")
-                + "    ==" + Color.parseColor("#888888")
-                + "    color==" + getResources().getResourceName(R.color.color_4F22FF)
-                + "    drawable==" + getResources().getResourceName(R.drawable.one)
-                + "    ==" + getPackageResourcePath()
-                + "    ==" + getPackageCodePath()
-                + "    ==" + imageView.getDrawable()
-                + "    ==" + Color.parseColor("#FFFFFF")
-        );
         imageView.setImageResource(R.drawable.bottom_bg);
-        XmlResourceParser xmlResourceParser;
-
         imageView.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
-//        getResources().getIdentifier()
         new Thread() {
             @Override
             public void run() {
@@ -198,15 +259,16 @@ public class FiveActivity extends FragmentActivity {
         animationDrawable = (AnimationDrawable) iv.getBackground();
         Intent intent = new Intent(this, AIDLService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-        findViewById(R.id.button_view).setOnClickListener(v -> {
-            Intent intent1 = new Intent(this, ThreeActivity.class);
-            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent1);
-        });
+//        findViewById(R.id.button_view).setOnClickListener(v -> {
+//            Intent intent1 = new Intent(this, ThreeActivity.class);
+//            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent1);
+//        });
 //        AssetManager assetManager = getAssets();
 //        for (String s : assetManager.getLocales()) {
 //            Log.e("Locales", "===" + s);
 //        }
+
     }
 
     private BookController controller;
@@ -268,9 +330,31 @@ public class FiveActivity extends FragmentActivity {
 
     private RelativeLayout.LayoutParams topRLParams;
 
+    public void clickC(View view) {
+        if (animation_view.isAnimating()) {
+            for (LottieAnimationView av : animation_views) {
+                av.pauseAnimation();
+            }
+        } else {
+            for (LottieAnimationView av : animation_views) {
+                av.playAnimation();
+            }
+        }
+    }
+
     public void clickB(View view) {
-        Intent intent = new Intent(this, FiveActivity.class);
-        startActivity(intent);
+        if (pagView.isPlaying()) {
+            for (PAGView p : pagViews) {
+                p.stop();
+            }
+        } else {
+            for (PAGView p : pagViews) {
+                p.play();
+            }
+        }
+
+//        Intent intent = new Intent(this, FiveActivity.class);
+//        startActivity(intent);
 //        try {
 //            JSONObject jsonObject = new JSONObject(json);
 //            String id = jsonObject.optString("id");

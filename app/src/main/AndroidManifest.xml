@@ -66,20 +66,16 @@
             android:process=":service" />
 
         <activity android:name=".activity.KotlinActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <!-- android:launchMode="singleTask" 一起使用才有作用     android:taskAffinity="com.android.aa" -->
 
         </activity>
         <activity android:name=".activity.FiveActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -88,7 +84,13 @@
             android:exported="true" />
 
         <activity android:name=".activity.MineActivity" />
-        <activity android:name=".activity.FourActivity" />
+        <activity android:name=".activity.FourActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.ThreeActivity"
             android:taskAffinity="why.w" />

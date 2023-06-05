@@ -25,7 +25,7 @@ public class SkinPatcher {
         Log.e("autoSkin", "===" + attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", 0));
         int srcResourceId = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", 0);
         if (srcResourceId != 0) {
-            String resourceKey = imageView.getResources().getResourceName(attrs.getAttributeResourceValue(srcResourceId, 0));
+//            String resourceKey = imageView.getResources().getResourceName(attrs.getAttributeResourceValue(srcResourceId, 0));
 
         }
 

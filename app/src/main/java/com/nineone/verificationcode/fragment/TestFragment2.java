@@ -17,7 +17,7 @@ import com.nineone.verificationcode.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestFragment1 extends Fragment {
+public class TestFragment2 extends Fragment {
     private int position;
     private RecyclerView recyclerView;
     private List<String> list;
@@ -26,10 +26,9 @@ public class TestFragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.simple_fragment_layout1, null);
-        position = getArguments().getInt("position", 0);
+
         TextView test_tv = view.findViewById(R.id.test_tv);
         test_tv.setText(String.valueOf(position));
-
         recyclerView = view.findViewById(R.id.recyclerView);
         initRecyclerView(recyclerView);
         return view;
@@ -38,7 +37,8 @@ public class TestFragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+//        position = getArguments().getInt("position", 0);
+        view.findViewById(R.id.back_ground_view).setBackgroundColor(getArguments().getInt("colorKey"));
 
     }
 

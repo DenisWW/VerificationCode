@@ -45,28 +45,120 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/pag_view"
         android:onClick="clickB" />
 
     <com.nineone.verificationcode.view.IMasterImageView
         android:id="@+id/iv"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_below="@+id/button_view"
         android:scaleType="fitXY"
-        android:src="@drawable/imaster_uikit_tip_normal_svg"
-        android:layout_below="@+id/button_view" />
+        android:src="@drawable/imaster_uikit_tip_normal_svg" />
+
 
     <TextView
         android:id="@+id/tv_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@+id/button_view"
-        android:textColor="@color/color_4F22FF"/>
+        android:textColor="@color/color_4F22FF" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <org.libpag.PAGView
+        android:id="@+id/pag_view"
+        android:layout_width="21dp"
+        android:layout_height="26dp" />
+
+    <org.libpag.PAGView
+        android:id="@+id/pag_view1"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_toRightOf="@+id/pag_view" />
+
+    <org.libpag.PAGView
+        android:id="@+id/pag_view2"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_toRightOf="@+id/pag_view1" />
+
+    <org.libpag.PAGView
+        android:id="@+id/pag_view3"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_toRightOf="@+id/pag_view2" />
+
+    <org.libpag.PAGView
+        android:id="@+id/pag_view4"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_toRightOf="@+id/pag_view3" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_below="@+id/button_view"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+       />
+<!--  app:lottie_rawRes="@raw/data"-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view1"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/animation_view"
+        android:layout_toRightOf="@+id/animation_view"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+       />
+<!--  app:lottie_rawRes="@raw/data"-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view2"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/animation_view"
+        android:layout_toRightOf="@+id/animation_view1"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+    />
+<!--         app:lottie_rawRes="@raw/data"-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view3"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/animation_view"
+        android:layout_toRightOf="@+id/animation_view2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+      />
+<!--       app:lottie_rawRes="@raw/data"-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view4"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/animation_view"
+        android:layout_toRightOf="@+id/animation_view3"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+ />
+<!--        app:lottie_rawRes="@raw/data"-->
+    <Button
+        android:id="@+id/button_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/animation_view"
+        android:onClick="clickC" />
 </RelativeLayout>

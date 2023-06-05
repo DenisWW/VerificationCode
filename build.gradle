@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url uri('./repo')
         }
