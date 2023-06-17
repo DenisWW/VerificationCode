@@ -10,6 +10,7 @@ class MyTestClass : Plugin<Project> {
         println("hello test plugin"+p0.displayName+"   ===")
         println("========================")
 //        Transform
+//        p0.getTasksByName();
     }
 
 }

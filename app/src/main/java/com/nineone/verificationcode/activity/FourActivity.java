@@ -24,6 +24,7 @@ import java.io.FileDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FourActivity extends FragmentActivity {
@@ -74,6 +75,95 @@ public class FourActivity extends FragmentActivity {
         } catch (NoSuchMethodException | IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
+        Log.e("长度是", "====" + lengthOfLongestSubstring("  "));
+//        start();
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        char[] chars = s.toCharArray();
+        List<Character> characters = new ArrayList<>();
+        char first;
+        int maxLength = 0;
+        for (int i = 0; i < chars.length; i++) {
+            first = chars[i];
+            characters.clear();
+            characters.add(first);
+            for (int j = i + 1; j < chars.length; j++) {
+                if (characters.contains( chars[j])) {
+                    Log.e("characters111","==="+characters.toString());
+                    break;
+                } else {
+                    characters.add(chars[j]);
+                }
+            }
+            Log.e("characters2222","==="+characters.toString());
+            if (characters.size() > maxLength) {
+                maxLength = characters.size();
+            }
+        }
+        return maxLength;
+    }
+
+    public void start() {
+        Text text = new Text();
+        new Thread("name1==") {
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+                    text.get();
+                }
+
+            }
+        }.start();
+        new Thread("name2==") {
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+                    text.save();
+                }
+
+
+            }
+        }.start();
+    }
+
+    private class Text {
+        private boolean flag = false;
+
+        public synchronized void save() {
+            try {
+                if (flag) {
+                    Log.e("存钱", "======1");
+                    wait();
+                } else {
+                    Log.e("存钱", "======2");
+                    flag = true;
+                    notifyAll();
+                }
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public synchronized void get() {
+            try {
+                if (!flag) {
+                    Log.e("取钱", "======1");
+                    wait();
+                }
+                Log.e("取钱", "======2");
+                flag = false;
+                notifyAll();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+
     }
 
     private void init() {
