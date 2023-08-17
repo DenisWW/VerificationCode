@@ -10,6 +10,8 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.LongFunction;
 
+import okhttp3.OkHttpClient;
+
 public class MainActivity extends Activity implements ViewModelStoreOwner, LifecycleOwner {
     private final LifecycleRegistry lifecycle = new LifecycleRegistry(this);
     private ViewModelStore viewModelStore;
@@ -53,6 +57,21 @@ public class MainActivity extends Activity implements ViewModelStoreOwner, Lifec
                 Log.e("onStateChanged", "====");
             }
         });
+        Handler handler=new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                return false;
+            }
+        }){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+
+        /**
+         *
+         */
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -66,6 +85,7 @@ public class MainActivity extends Activity implements ViewModelStoreOwner, Lifec
                 .getInstance(getApplication()))
                 .get(UserViewModel.class);
 
+        OkHttpClient
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 getWindow().setStatusBarColor(Color.TRANSPARENT);

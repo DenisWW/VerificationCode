@@ -1,5 +1,5 @@
 // IPCCallback.aidl
-package com.jzsec.basics.ipc;
+package com.nineone.verificationcode;
 
 // Declare any non-default types here with import statements
 

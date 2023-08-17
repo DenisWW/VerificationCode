@@ -1,6 +1,10 @@
 package com.nineone.verificationcode.activity;
 
+import static android.net.LocalSocket.SOCKET_DGRAM;
+
 import android.content.Context;
+import android.net.LocalSocket;
+import android.net.LocalSocketAddress;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +25,7 @@ import com.nineone.verificationcode.bean.Bean;
 import com.nineone.verificationcode.fragment.TestFragment2;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -75,8 +80,26 @@ public class FourActivity extends FragmentActivity {
         } catch (NoSuchMethodException | IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
+//        View.MeasureSpec.getMode();
+//        View.MeasureSpec.getSize()
         Log.e("长度是", "====" + lengthOfLongestSubstring("  "));
 //        start();
+
+//       new Thread(){
+//           @Override
+//           public void run() {
+//               super.run();
+//               while (true){
+//                   LocalSocket localSocket=new LocalSocket();
+//                   try {
+//                       localSocket.connect(new LocalSocketAddress("wanghaoyu"));
+//                   } catch (IOException e) {
+//                       throw new RuntimeException(e);
+//                   }
+//
+//               }
+//           }
+//       }.start();
     }
 
     public int lengthOfLongestSubstring(String s) {

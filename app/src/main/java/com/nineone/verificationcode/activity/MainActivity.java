@@ -9,6 +9,7 @@ import android.media.MediaCodecList;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
+import android.net.LocalSocket;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,6 +51,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -169,6 +171,7 @@ public class MainActivity extends Activity {
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         }
         Lock lock = new ReentrantLock();
+
 
 //        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 //        Log.e("Location", "===" + location);
@@ -291,6 +294,9 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        LocalSocket socket=new LocalSocket();
+//        socket.getFileDescriptor();
         int numTracks = extractor.getTrackCount();
         for (int i = 0; i < numTracks; i++) {
             MediaFormat format = extractor.getTrackFormat(i);

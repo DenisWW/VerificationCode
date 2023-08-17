@@ -1,6 +1,5 @@
 package com.example.groovylib
 
-import org.apache.tools.ant.taskdefs.Transform
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

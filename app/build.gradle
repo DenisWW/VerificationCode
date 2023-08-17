@@ -122,6 +122,10 @@ dependencies {
     implementation "com.airbnb.android:lottie:5.0.3"
 }
 
+MyWHY {
+    lintXmlPath = ""
+    outputPath = ""
+}
 //获取分支名称
 def gitGitVersionName() {
     return 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
@@ -144,7 +148,7 @@ configurations.all {
 project.afterEvaluate {
     System.out.println("why" + processDebugManifest.getVariantOutputs())
     project.tasks.findByPath(":app:processDebugManifest").doLast {
-        org.apache.tools.ant.taskdefs.Manifest.getDefaultManifest().addConfiguredAttribute(new org.apache.tools.ant.taskdefs.Manifest.Attribute("why","why"))
+        org.apache.tools.ant.taskdefs.Manifest.getDefaultManifest().addConfiguredAttribute(new org.apache.tools.ant.taskdefs.Manifest.Attribute("why", "why"))
 //        System.out.println("why11"+it.manifestOutputDirectory().toString())
     }
 }

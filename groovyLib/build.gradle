@@ -17,7 +17,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             pom.groupId = 'com.example.groovylib'
-            pom.artifactId = 'MyTestClass'
+            pom.artifactId = 'WhyClass'
             pom.version = 1.0
             //本地的Maven地址设置为D:/repos
             repository(url: uri('../repo'))

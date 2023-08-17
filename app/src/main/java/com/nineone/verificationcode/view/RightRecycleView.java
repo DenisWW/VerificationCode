@@ -1,5 +1,6 @@
 package com.nineone.verificationcode.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ public class RightRecycleView extends RecyclerView {
 
     public RightRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     RecyclerView view;

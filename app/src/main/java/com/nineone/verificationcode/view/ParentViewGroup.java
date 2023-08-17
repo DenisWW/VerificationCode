@@ -87,6 +87,12 @@ public class ParentViewGroup extends FrameLayout implements NestedScrollingParen
         }
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        getChildMeasureSpec()
+    }
+
     private View view;
 
     @Override

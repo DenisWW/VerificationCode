@@ -38,6 +38,10 @@ Java_com_nineone_verificationcode_activity_MainActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
+
+    env->FindClass("com/nineone/verificationcode/activity");
+//    env->GetFieldID()
+jfieldID jfieldId;
     return env->NewStringUTF(hello.c_str());
 }
 extern "C" JNIEXPORT jstring
